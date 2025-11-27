@@ -1,8 +1,18 @@
 // ============================================
-// WA Sender Pro v2.2 - Sidebar Logic
+// WA Sender Pro v2.3 - Sidebar Logic
 // Sistema Inteligente de Detección de WhatsApp
 // Con soporte de internacionalización (i18n)
+// Con soporte de adjuntos mejorado
 // ============================================
+
+// ===== MODO DEBUG =====
+const DEBUG = true;
+
+function debugLog(message, data = null) {
+  if (DEBUG) {
+    console.log(`[WA Sender Pro Debug] ${message}`, data || '');
+  }
+}
 
 // --- State ---
 let contacts = [];
@@ -18,7 +28,8 @@ let settings = {
   delayMax: 10,
   antiBan: false,
   deleteAfter: false,
-  addTimestamp: false
+  addTimestamp: false,
+  sendAttachmentFirst: true
 };
 
 // --- UI Elements ---
@@ -86,9 +97,47 @@ function applyI18n() {
 // Initialization - Sistema de Detección Automática
 // ============================================
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // Apply i18n first
   applyI18n();
+  
+  // Diagnóstico al iniciar
+  debugLog('Iniciando diagnóstico...');
+  
+  // 1. Verificar SheetJS
+  debugLog('SheetJS disponible?', typeof XLSX !== 'undefined');
+  
+  if (typeof XLSX === 'undefined') {
+    console.error('[WA Sender Pro] ❌ SheetJS NO está cargado - Los archivos Excel no funcionarán');
+  } else {
+    debugLog('✅ SheetJS cargado correctamente');
+  }
+  
+  // 2. Verificar permisos
+  try {
+    const permissions = await chrome.permissions.getAll();
+    debugLog('Permisos:', permissions);
+  } catch (e) {
+    debugLog('Error obteniendo permisos:', e);
+  }
+  
+  // 3. Verificar tabs de WhatsApp
+  try {
+    const tabs = await chrome.tabs.query({ url: 'https://web.whatsapp.com/*' });
+    debugLog('Tabs de WhatsApp encontradas:', tabs.length);
+  } catch (e) {
+    debugLog('Error buscando tabs:', e);
+  }
+  
+  // 4. Verificar storage
+  try {
+    const storage = await chrome.storage.local.get(null);
+    debugLog('Storage actual:', Object.keys(storage));
+  } catch (e) {
+    debugLog('Error leyendo storage:', e);
+  }
+  
+  debugLog('Diagnóstico completado');
   
   // Then initialize app
   initializeApp();
@@ -472,13 +521,13 @@ function renderContacts() {
   }
   
   list.innerHTML = contacts.map((c, i) => `
-    <div class="was-contact-item ${c.status === 'sending' ? 'sending' : ''}" data-index="${i}">
+    <div class="was-contact-item ${c.status === 'sending' ? 'sending' : ''}" data-index="${i}" title="${c.errorMsg || ''}">
       <div class="was-contact-number">
         <span class="index">${i + 1}.</span>
         <span>${formatPhoneNumber(c.number)}</span>
       </div>
       <span class="was-status-badge was-status-${c.status}">
-        ${getStatusText(c.status)}
+        ${getStatusText(c.status, c.errorMsg)}
       </span>
     </div>
   `).join('');
@@ -491,13 +540,21 @@ function formatPhoneNumber(number) {
   return number;
 }
 
-function getStatusText(status) {
+function getStatusText(status, errorMsg = null) {
   const texts = {
     pending: i18n('statusPending'),
     sending: i18n('statusSendingProgress'),
     sent: i18n('statusSent'),
     error: i18n('statusErrorLabel')
   };
+  
+  // Si hay error, mostrar el motivo abreviado
+  if (status === 'error' && errorMsg) {
+    // Abreviar mensajes largos
+    const shortError = errorMsg.length > 20 ? errorMsg.substring(0, 18) + '...' : errorMsg;
+    return `✗ ${shortError}`;
+  }
+  
   return texts[status] || status;
 }
 
@@ -1315,15 +1372,47 @@ function insertText(text) {
 // Attachment
 // ============================================
 
-function handleAttachment(event) {
+async function handleAttachment(event) {
   const file = event.target.files[0];
   if (!file) return;
   
-  currentAttachment = file;
+  // Validar tipo
+  const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/quicktime', 'video/webm'];
+  
+  if (!validTypes.some(type => file.type.startsWith(type.split('/')[0]))) {
+    showNotification(i18n('msgInvalidFileType') || 'Solo se permiten imágenes (JPG, PNG, GIF, WebP) y videos (MP4, MOV, WebM)', 'error');
+    return;
+  }
+  
+  // Validar tamaño (máx 16MB para WhatsApp)
+  if (file.size > 16 * 1024 * 1024) {
+    showNotification(i18n('msgFileTooLarge') || 'El archivo es muy grande. Máximo 16MB', 'error');
+    return;
+  }
+  
+  // Convertir a base64
+  try {
+    const base64 = await fileToBase64(file);
+    
+    currentAttachment = {
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      data: base64
+    };
+    
+    debugLog('Adjunto procesado:', { name: file.name, type: file.type, size: file.size });
+    
+  } catch (error) {
+    console.error('Error procesando archivo:', error);
+    showNotification(i18n('msgFileProcessError') || 'Error al procesar el archivo', 'error');
+    return;
+  }
   
   const preview = document.getElementById('attachment-preview');
   const icon = document.getElementById('attachment-icon');
   const name = document.getElementById('attachment-name');
+  const orderOption = document.getElementById('send-order-option');
   
   if (name) name.textContent = file.name;
   
@@ -1338,16 +1427,30 @@ function handleAttachment(event) {
   }
   
   if (preview) preview.style.display = 'flex';
-  showNotification(i18n('msgFileAttached', file.name), 'success');
+  if (orderOption) orderOption.style.display = 'block';
+  
+  showNotification(i18n('msgFileAttached', file.name) || `Archivo adjunto: ${file.name}`, 'success');
+}
+
+// Convertir archivo a base64
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
 
 function removeAttachment() {
   currentAttachment = null;
   const input = document.getElementById('attachment-input');
   const preview = document.getElementById('attachment-preview');
+  const orderOption = document.getElementById('send-order-option');
   
   if (input) input.value = '';
   if (preview) preview.style.display = 'none';
+  if (orderOption) orderOption.style.display = 'none';
 }
 
 // ============================================
@@ -1471,6 +1574,7 @@ async function startSending() {
   
   let sent = 0;
   let failed = 0;
+  let skipped = 0;
   
   for (let i = 0; i < contacts.length; i++) {
     if (shouldStop) break;
@@ -1491,41 +1595,76 @@ async function startSending() {
         finalMessage += `\n\n📅 ${new Date().toLocaleString()}`;
       }
       
+      debugLog(`Enviando ${i + 1}/${contacts.length} a:`, contacts[i].number);
+      
       const result = await sendSingleMessage(contacts[i].number, finalMessage);
       
       if (result.success) {
         contacts[i].status = 'sent';
+        contacts[i].errorMsg = null;
         sent++;
         await updateGlobalStats('sent');
+        debugLog('✅ Enviado correctamente');
+      } else if (result.skipped) {
+        // Contacto saltado (número inválido, sin WhatsApp, etc.)
+        contacts[i].status = 'error';
+        contacts[i].errorMsg = result.error || 'Saltado';
+        skipped++;
+        await updateGlobalStats('failed');
+        debugLog('⏭️ Saltado:', result.error);
+        // No esperar delay largo para contactos saltados
+        await sleep(500);
+        renderContacts();
+        updateProgress(i + 1, contacts.length);
+        continue; // Continuar inmediatamente con el siguiente
       } else {
         contacts[i].status = 'error';
+        contacts[i].errorMsg = result.error || 'Error desconocido';
         failed++;
         await updateGlobalStats('failed');
+        debugLog('❌ Falló:', result.error);
       }
     } catch (error) {
       console.error('Error sending to', contacts[i].number, error);
       contacts[i].status = 'error';
+      contacts[i].errorMsg = error.message || 'Error de conexión';
       failed++;
       await updateGlobalStats('failed');
+      debugLog('❌ Excepción:', error.message);
     }
     
     renderContacts();
     updateProgress(i + 1, contacts.length);
     
-    if (i < contacts.length - 1 && !shouldStop) {
+    // Solo esperar delay si:
+    // 1. No es el último contacto
+    // 2. No se ha detenido
+    // 3. El envío fue exitoso (no queremos esperar si falló)
+    if (i < contacts.length - 1 && !shouldStop && contacts[i].status === 'sent') {
       const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
       await countdown(delay);
+    } else if (contacts[i].status === 'error') {
+      // Pequeña pausa entre errores para no saturar
+      await sleep(1000);
     }
   }
   
   isSending = false;
   updateUIState(false);
   
+  // Resumen final
+  const total = sent + failed + skipped;
   if (shouldStop) {
     showNotification(i18n('msgSendingStopped'), 'warning');
   } else {
-    showNotification(i18n('msgSendingComplete', sent.toString(), failed.toString()), 'success');
+    let summary = `✅ ${sent} enviados`;
+    if (failed > 0) summary += ` | ❌ ${failed} fallidos`;
+    if (skipped > 0) summary += ` | ⏭️ ${skipped} saltados`;
+    showNotification(summary, sent > 0 ? 'success' : 'warning');
   }
+  
+  debugLog('═══════════════════════════════════');
+  debugLog(`📊 Resumen: ${sent} enviados, ${failed} fallidos, ${skipped} saltados`);
 }
 
 function stopSending() {
@@ -1534,6 +1673,10 @@ function stopSending() {
 }
 
 async function sendSingleMessage(phone, text) {
+  // Obtener opción de orden de adjunto
+  const sendAttachmentFirstCheckbox = document.getElementById('send-attachment-first');
+  const sendAttachmentFirst = sendAttachmentFirstCheckbox ? sendAttachmentFirstCheckbox.checked : true;
+  
   return new Promise((resolve) => {
     sendToContent({
       action: 'sendMessage',
@@ -1542,11 +1685,14 @@ async function sendSingleMessage(phone, text) {
       attachment: currentAttachment ? {
         name: currentAttachment.name,
         type: currentAttachment.type,
-        data: null
-      } : null
+        data: currentAttachment.data
+      } : null,
+      sendAttachmentFirst: sendAttachmentFirst
     }).then(response => {
+      debugLog('Respuesta de envío:', response);
       resolve(response || { success: false, error: 'No response' });
     }).catch(error => {
+      debugLog('Error en envío:', error);
       resolve({ success: false, error: error.message });
     });
   });

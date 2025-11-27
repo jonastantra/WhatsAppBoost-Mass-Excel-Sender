@@ -1874,6 +1874,44 @@ body {
   font-size: 13px;
 }
 
+/* Send Order Option */
+.was-send-order-option {
+  margin: 10px 0;
+  padding: 12px;
+  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+  border-left: 3px solid var(--was-primary);
+  border-radius: var(--was-radius-sm);
+  animation: slideIn 0.3s ease;
+}
+
+.was-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--was-text);
+  font-weight: 500;
+}
+
+.was-checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--was-primary);
+}
+
+.was-checkmark {
+  display: none;
+}
+
+.was-helper-text {
+  font-size: 11px;
+  color: var(--was-text-muted);
+  margin: 6px 0 0 28px;
+  line-height: 1.4;
+}
+
 /* Quick Actions */
 .was-quick-actions {
   display: flex;

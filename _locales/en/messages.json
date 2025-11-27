@@ -753,6 +753,31 @@
   "errorNoMembersInstruction": {
     "message": "No numbers found. Make sure to:\n1. Be in the group info view\n2. Participants are visible\n3. Scroll to load more participants",
     "description": "No members found instruction"
+  },
+
+  "sendAttachmentFirst": {
+    "message": "📷 Send attachment first, then text",
+    "description": "Send attachment first option"
+  },
+  "attachmentOrderHint": {
+    "message": "Recommended: Messages look better when the image arrives first",
+    "description": "Attachment order hint"
+  },
+  "msgInvalidFileType": {
+    "message": "Only images (JPG, PNG, GIF, WebP) and videos (MP4, MOV, WebM) are allowed",
+    "description": "Invalid file type error"
+  },
+  "msgFileProcessError": {
+    "message": "Error processing the file",
+    "description": "File process error"
+  },
+  "errorNoMessageBox": {
+    "message": "Message box not found",
+    "description": "No message box error"
+  },
+  "errorNoSendModal": {
+    "message": "Send modal did not appear",
+    "description": "No send modal error"
   }
 }
 

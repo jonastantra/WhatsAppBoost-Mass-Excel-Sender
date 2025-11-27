@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WA Sender Pro</title>
   <link rel="stylesheet" href="sidebar.css">
-  <!-- SheetJS para Excel -->
-  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+  <!-- SheetJS para Excel - LOCAL (CSP compliant) -->
+  <script src="libs/xlsx.full.min.js"></script>
 </head>
 <body>
   <div class="was-app">
@@ -529,6 +529,16 @@
               <span id="attachment-name">archivo.jpg</span>
             </div>
             <button class="was-remove-btn" id="remove-attachment-btn">✕</button>
+          </div>
+
+          <!-- Send Order Option -->
+          <div class="was-send-order-option" id="send-order-option" style="display: none;">
+            <label class="was-checkbox-label">
+              <input type="checkbox" id="send-attachment-first" checked>
+              <span class="was-checkmark"></span>
+              <span data-i18n="sendAttachmentFirst">📷 Enviar adjunto primero, luego el texto</span>
+            </label>
+            <p class="was-helper-text" data-i18n="attachmentOrderHint">Recomendado: Los mensajes se ven mejor cuando la imagen llega primero</p>
           </div>
 
           <!-- Text Area -->

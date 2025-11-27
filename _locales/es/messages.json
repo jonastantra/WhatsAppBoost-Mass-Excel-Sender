@@ -753,6 +753,31 @@
   "errorNoMembersInstruction": {
     "message": "No se encontraron números. Asegúrate de:\n1. Estar en la vista de info del grupo\n2. Que los participantes sean visibles\n3. Desplázate para cargar más participantes",
     "description": "Instrucción no se encontraron miembros"
+  },
+
+  "sendAttachmentFirst": {
+    "message": "📷 Enviar adjunto primero, luego el texto",
+    "description": "Opción enviar adjunto primero"
+  },
+  "attachmentOrderHint": {
+    "message": "Recomendado: Los mensajes se ven mejor cuando la imagen llega primero",
+    "description": "Indicación orden de adjunto"
+  },
+  "msgInvalidFileType": {
+    "message": "Solo se permiten imágenes (JPG, PNG, GIF, WebP) y videos (MP4, MOV, WebM)",
+    "description": "Error tipo de archivo inválido"
+  },
+  "msgFileProcessError": {
+    "message": "Error al procesar el archivo",
+    "description": "Error procesando archivo"
+  },
+  "errorNoMessageBox": {
+    "message": "No se encontró el cuadro de mensaje",
+    "description": "Error no hay cuadro de mensaje"
+  },
+  "errorNoSendModal": {
+    "message": "No apareció el modal de envío",
+    "description": "Error no apareció modal de envío"
   }
 }
 
