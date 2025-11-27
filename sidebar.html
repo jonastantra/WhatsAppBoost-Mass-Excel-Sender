@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WA Sender Pro</title>
+  <link rel="stylesheet" href="sidebar.css">
+  <!-- SheetJS para Excel -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <div class="was-app">
+    
+    <!-- ============================================ -->
+    <!-- PANTALLA DE CARGA -->
+    <!-- ============================================ -->
+    <div id="loading-screen" class="was-screen was-loading-screen">
+      <div class="was-loading-content">
+        <div class="was-loading-logo">
+          <svg viewBox="0 0 24 24" width="64" height="64">
+            <path fill="#00a884" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"/>
+          </svg>
+        </div>
+        <div class="was-spinner"></div>
+        <p class="was-loading-title">WA Sender Pro</p>
+        <p class="was-loading-message" id="loading-message">Inicializando...</p>
+        <div class="was-loading-steps" id="loading-steps">
+          <div class="was-step" id="step-find">
+            <span class="was-step-icon">○</span>
+            <span class="was-step-text">Buscando WhatsApp Web</span>
+          </div>
+          <div class="was-step" id="step-connect">
+            <span class="was-step-icon">○</span>
+            <span class="was-step-text">Conectando</span>
+          </div>
+          <div class="was-step" id="step-ready">
+            <span class="was-step-icon">○</span>
+            <span class="was-step-text">Listo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PANTALLA DE QR REQUERIDO -->
+    <!-- ============================================ -->
+    <div id="qr-screen" class="was-screen was-qr-screen" style="display: none;">
+      <div class="was-qr-content">
+        <svg class="was-qr-icon" viewBox="0 0 24 24" width="72" height="72">
+          <path fill="#3b82f6" d="M3 11h8V3H3v8zm2-6h4v4H5V5zm8-2v8h8V3h-8zm6 6h-4V5h4v4zM3 21h8v-8H3v8zm2-6h4v4H5v-4zm13 2h-2v2h2v2h-4v-4h2v-2h2v2zm0 2h2v2h-2v-2zm-4 2h2v-2h-2v2zm4-8h2v2h2v-2h-2V9h-2v2z"/>
+        </svg>
+        <h3 class="was-qr-title">Escanea el código QR</h3>
+        <p class="was-qr-message">Abre WhatsApp en tu teléfono y escanea el código QR para continuar.</p>
+        <div class="was-qr-instructions">
+          <p>1. Abre WhatsApp en tu teléfono</p>
+          <p>2. Toca <strong>Menú</strong> o <strong>Configuración</strong></p>
+          <p>3. Selecciona <strong>Dispositivos vinculados</strong></p>
+          <p>4. Toca <strong>Vincular un dispositivo</strong></p>
+        </div>
+        <button class="was-btn was-btn-primary" id="qr-retry-btn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+          </svg>
+          Verificar conexión
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- PANTALLA DE ERROR -->
+    <!-- ============================================ -->
+    <div id="error-screen" class="was-screen was-error-screen" style="display: none;">
+      <div class="was-error-content">
+        <svg class="was-error-icon" viewBox="0 0 24 24" width="64" height="64">
+          <path fill="#ef4444" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        </svg>
+        <h3 class="was-error-title">Error de Conexión</h3>
+        <p class="was-error-message" id="error-message">No se pudo conectar con WhatsApp Web</p>
+        <div class="was-error-actions">
+          <button class="was-btn was-btn-primary" id="error-retry-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+            </svg>
+            Reintentar
+          </button>
+          <button class="was-btn was-btn-secondary" id="error-open-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+            </svg>
+            Abrir WhatsApp Web
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- UI PRINCIPAL -->
+    <!-- ============================================ -->
+    <div id="main-ui" class="was-main-container" style="display: none;">
+      
+      <!-- Header -->
+      <header class="was-header">
+        <div class="was-logo">
+          <div class="was-logo-icon">
+            <svg viewBox="0 0 24 24" width="28" height="28">
+              <path fill="#fff" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"/>
+            </svg>
+          </div>
+          <span class="was-logo-text">WA Sender Pro</span>
+        </div>
+        <button class="was-send-float" id="quick-send-btn" title="Envío rápido">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Status Bar -->
+      <div class="was-status-bar" id="status-bar">
+        <span class="was-status-dot"></span>
+        <span class="was-status-text">Conectado a WhatsApp Web</span>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <nav class="was-tabs">
+        <button class="was-tab active" data-tab="tab-manual">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          Manual
+        </button>
+        <button class="was-tab" data-tab="tab-excel">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+          Excel/CSV
+        </button>
+        <button class="was-tab" data-tab="tab-groups">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          Grupos
+        </button>
+        <button class="was-tab" data-tab="tab-settings">
+          <svg viewBox="0 0 24 24" width="16" height="16"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+          Ajustes
+        </button>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="was-main">
+        <!-- TAB: MANUAL -->
+        <section id="tab-manual" class="was-tab-content active">
+          <div class="was-card">
+            <div class="was-card-header">
+              <h3>Añadir Números</h3>
+            </div>
+            <div class="was-card-body">
+              <div class="was-input-row">
+                <input type="text" class="was-input" id="number-input" placeholder="+521234567890">
+                <button class="was-btn was-btn-icon" id="add-number-btn" title="Añadir">
+                  <svg viewBox="0 0 24 24" width="20" height="20"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                </button>
+              </div>
+              
+              <div class="was-contact-list" id="contact-list">
+                <div class="was-empty-state">
+                  <svg viewBox="0 0 24 24" width="48" height="48" opacity="0.3"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                  <p>No hay contactos añadidos</p>
+                </div>
+              </div>
+
+              <div class="was-actions-row">
+                <button class="was-btn was-btn-outline" id="clear-contacts-btn">
+                  <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                  Limpiar Lista
+                </button>
+                <span class="was-contact-count">Total: <strong id="total-contacts">0</strong></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB: EXCEL/CSV -->
+        <section id="tab-excel" class="was-tab-content">
+          <!-- Instrucciones -->
+          <div class="was-card was-card-info">
+            <div class="was-card-body">
+              <div class="was-info-header">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="#3b82f6">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <h4>¿Cómo usar las plantillas?</h4>
+              </div>
+              <ol class="was-instructions">
+                <li>Descarga la plantilla de ejemplo</li>
+                <li>Llena los datos de tus contactos</li>
+                <li>Sube el archivo aquí</li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- Botones de Descarga de Plantilla -->
+          <div class="was-card">
+            <div class="was-card-header">
+              <h3>📥 Descargar Plantilla</h3>
+            </div>
+            <div class="was-card-body">
+              <div class="was-template-buttons">
+                <button class="was-btn was-btn-excel" id="download-excel-btn">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
+                    <path d="M8 12h3v2H8v-2zm0 3h3v2H8v-2zm5-3h3v2h-3v-2zm0 3h3v2h-3v-2z"/>
+                  </svg>
+                  <span>
+                    <strong>Excel (.xlsx)</strong>
+                    <small>Recomendado</small>
+                  </span>
+                </button>
+                <button class="was-btn was-btn-csv" id="download-csv-btn">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
+                  </svg>
+                  <span>
+                    <strong>CSV</strong>
+                    <small>Simple</small>
+                  </span>
+                </button>
+              </div>
+              
+              <div class="was-template-info">
+                <p><strong>Columnas disponibles:</strong></p>
+                <div class="was-column-tags">
+                  <span class="was-tag was-tag-required">phone</span>
+                  <span class="was-tag">name</span>
+                  <span class="was-tag">var1</span>
+                  <span class="was-tag">var2</span>
+                  <span class="was-tag">var3</span>
+                </div>
+                <p class="was-hint">La columna <code>phone</code> es obligatoria</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zona de Subida -->
+          <div class="was-card">
+            <div class="was-card-header">
+              <h3>📤 Subir Archivo</h3>
+            </div>
+            <div class="was-card-body">
+              <div class="was-upload-zone" id="upload-zone">
+                <input type="file" id="file-input" accept=".xlsx,.xls,.csv,.txt" hidden>
+                <div class="was-upload-content">
+                  <div class="was-upload-icon">
+                    <svg viewBox="0 0 24 24" width="48" height="48">
+                      <path fill="#94a3b8" d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/>
+                    </svg>
+                  </div>
+                  <p class="was-upload-text">Arrastra tu archivo aquí</p>
+                  <p class="was-upload-or">— o —</p>
+                  <button class="was-btn was-btn-primary" id="select-file-btn">
+                    Seleccionar Archivo
+                  </button>
+                  <p class="was-upload-hint">Excel (.xlsx, .xls), CSV, TXT — Máximo 5MB</p>
+                </div>
+              </div>
+
+              <!-- Vista previa del archivo -->
+              <div class="was-file-preview" id="file-preview" style="display: none;">
+                <div class="was-file-icon" id="file-icon">
+                  <svg viewBox="0 0 24 24" width="32" height="32">
+                    <path fill="#16a34a" d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6z"/>
+                  </svg>
+                </div>
+                <div class="was-file-details">
+                  <span class="was-file-name" id="file-name">archivo.xlsx</span>
+                  <span class="was-file-size" id="file-size">0 KB</span>
+                </div>
+                <button class="was-btn was-btn-icon was-btn-danger" id="remove-file-btn" title="Eliminar">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Resultado de importación -->
+              <div id="import-result" class="was-import-result" style="display: none;"></div>
+
+              <!-- Vista previa de contactos importados -->
+              <div id="import-preview" class="was-import-preview" style="display: none;">
+                <div class="was-preview-header">
+                  <h4>Vista Previa</h4>
+                  <span class="was-preview-count" id="preview-count">0 contactos</span>
+                </div>
+                <div class="was-preview-table" id="preview-table">
+                  <!-- Se genera dinámicamente -->
+                </div>
+                <div class="was-preview-actions">
+                  <button class="was-btn was-btn-outline" id="cancel-import-btn">Cancelar</button>
+                  <button class="was-btn was-btn-primary" id="confirm-import-btn">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    </svg>
+                    Importar Contactos
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB: GROUPS -->
+        <section id="tab-groups" class="was-tab-content">
+          <!-- Instrucciones -->
+          <div class="was-card was-card-warning">
+            <div class="was-card-body">
+              <div class="was-group-instructions">
+                <div class="was-instruction-header">
+                  <svg viewBox="0 0 24 24" width="28" height="28" fill="#f59e0b">
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                  </svg>
+                  <h4>Extraer Miembros de Grupo</h4>
+                </div>
+                <ol class="was-steps-list">
+                  <li>
+                    <span class="was-step-num">1</span>
+                    <span>Abre un <strong>grupo</strong> en WhatsApp Web</span>
+                  </li>
+                  <li>
+                    <span class="was-step-num">2</span>
+                    <span>Haz clic en el <strong>nombre del grupo</strong> (arriba)</span>
+                  </li>
+                  <li>
+                    <span class="was-step-num">3</span>
+                    <span>Desplázate para ver la <strong>lista de participantes</strong></span>
+                  </li>
+                  <li>
+                    <span class="was-step-num">4</span>
+                    <span>Haz clic en el botón de abajo</span>
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón Principal -->
+          <div class="was-card">
+            <div class="was-card-body">
+              <button class="was-btn was-btn-group was-btn-full" id="scrape-group-btn">
+                <div class="was-btn-icon-wrapper">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                  </svg>
+                </div>
+                <div class="was-btn-text">
+                  <strong>Obtener Miembros del Grupo</strong>
+                  <small>Extrae los números del grupo abierto</small>
+                </div>
+              </button>
+
+              <!-- Estado de extracción -->
+              <div id="group-extract-status" class="was-extract-status" style="display: none;">
+                <div class="was-extract-spinner"></div>
+                <span id="group-extract-message">Buscando miembros...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vista previa de miembros -->
+          <div id="group-members-preview" class="was-card" style="display: none;">
+            <div class="was-card-header">
+              <h3>👥 Miembros Encontrados</h3>
+              <span class="was-badge was-badge-success" id="members-count">0</span>
+            </div>
+            <div class="was-card-body">
+              <div class="was-members-list" id="members-list">
+                <!-- Se genera dinámicamente -->
+              </div>
+              <div class="was-preview-actions">
+                <button class="was-btn was-btn-outline" id="cancel-group-import-btn">
+                  Cancelar
+                </button>
+                <button class="was-btn was-btn-primary" id="confirm-group-import-btn">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                  </svg>
+                  Añadir a la Lista
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Disclaimer -->
+          <div class="was-disclaimer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            <p><strong>Uso Responsable:</strong> Esta función es para uso personal. No uses los números extraídos para spam. Respeta las políticas de WhatsApp.</p>
+          </div>
+        </section>
+
+        <!-- TAB: SETTINGS -->
+        <section id="tab-settings" class="was-tab-content">
+          <div class="was-card">
+            <div class="was-card-header">
+              <h3>Configuración de Envío</h3>
+            </div>
+            <div class="was-card-body">
+              <div class="was-setting-row">
+                <div class="was-setting-info">
+                  <span class="was-setting-label">Intervalo de envío</span>
+                  <span class="was-setting-desc">Los mensajes se enviarán aleatoriamente en este rango</span>
+                </div>
+                <div class="was-interval-inputs">
+                  <button class="was-interval-btn" data-action="decrease" data-target="delay-min">−</button>
+                  <input type="number" class="was-interval-input" id="delay-min" value="6" min="1" max="60">
+                  <span class="was-interval-sep">~</span>
+                  <input type="number" class="was-interval-input" id="delay-max" value="10" min="1" max="120">
+                  <button class="was-interval-btn" data-action="increase" data-target="delay-max">+</button>
+                  <span class="was-interval-unit">seg</span>
+                </div>
+              </div>
+
+              <div class="was-setting-toggle">
+                <div class="was-setting-info">
+                  <span class="was-setting-label">Anti-Bloqueo (ID único)</span>
+                  <span class="was-setting-desc">Añade un identificador único a cada mensaje</span>
+                </div>
+                <label class="was-switch">
+                  <input type="checkbox" id="anti-ban-toggle">
+                  <span class="was-switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="was-setting-toggle">
+                <div class="was-setting-info">
+                  <span class="was-setting-label">Eliminar chat después de enviar</span>
+                  <span class="was-setting-desc">Archiva el chat automáticamente</span>
+                </div>
+                <label class="was-switch">
+                  <input type="checkbox" id="delete-after-toggle">
+                  <span class="was-switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="was-setting-toggle">
+                <div class="was-setting-info">
+                  <span class="was-setting-label">Agregar marca de tiempo</span>
+                  <span class="was-setting-desc">Añade la hora al final del mensaje</span>
+                </div>
+                <label class="was-switch">
+                  <input type="checkbox" id="timestamp-toggle">
+                  <span class="was-switch-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="was-card">
+            <div class="was-card-header">
+              <h3>Estadísticas</h3>
+            </div>
+            <div class="was-card-body">
+              <div class="was-stats-grid">
+                <div class="was-stat-item was-stat-success">
+                  <span class="was-stat-value" id="stat-sent">0</span>
+                  <span class="was-stat-label">Enviados</span>
+                </div>
+                <div class="was-stat-item was-stat-error">
+                  <span class="was-stat-value" id="stat-failed">0</span>
+                  <span class="was-stat-label">Fallidos</span>
+                </div>
+                <div class="was-stat-item was-stat-pending">
+                  <span class="was-stat-value" id="stat-pending">0</span>
+                  <span class="was-stat-label">Pendientes</span>
+                </div>
+              </div>
+              <button class="was-btn was-btn-outline was-btn-full" id="reset-stats-btn">
+                Reiniciar Estadísticas
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- MESSAGE COMPOSER (Always visible) -->
+        <div class="was-composer">
+          <div class="was-composer-header">
+            <h3>Mensaje</h3>
+            <button class="was-test-link" id="test-message-btn">
+              <span class="was-test-dot"></span>
+              Hacer prueba
+            </button>
+          </div>
+
+          <!-- Templates -->
+          <div class="was-template-row">
+            <select class="was-select" id="template-select">
+              <option value="">Seleccionar plantilla...</option>
+            </select>
+            <button class="was-btn was-btn-icon" id="save-template-btn" title="Guardar plantilla">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+            </button>
+            <button class="was-btn was-btn-icon was-btn-danger" id="delete-template-btn" title="Eliminar plantilla" style="display: none;">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            </button>
+          </div>
+
+          <!-- Variables -->
+          <div class="was-variables">
+            <span class="was-variables-label">Variables:</span>
+            <button class="was-variable-btn" data-var="{{numero}}">Número</button>
+            <button class="was-variable-btn" data-var="{{nombre}}">Nombre</button>
+            <button class="was-variable-btn" data-var="{{fecha}}">Fecha</button>
+          </div>
+
+          <!-- Toolbar -->
+          <div class="was-toolbar">
+            <div class="was-format-btns">
+              <button class="was-format-btn" data-format="*" title="Negrita"><b>B</b></button>
+              <button class="was-format-btn" data-format="_" title="Cursiva"><i>I</i></button>
+              <button class="was-format-btn" data-format="~" title="Tachado"><s>S</s></button>
+              <button class="was-format-btn" data-format="```" title="Código"><code>&lt;/&gt;</code></button>
+            </div>
+            <label class="was-attach-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5a2.5 2.5 0 0 1 5 0v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5a2.5 2.5 0 0 0 5 0V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/></svg>
+              Adjuntar
+              <input type="file" id="attachment-input" hidden accept="image/*,video/*,.pdf,.doc,.docx">
+            </label>
+          </div>
+
+          <!-- Attachment Preview -->
+          <div class="was-attachment-preview" id="attachment-preview" style="display: none;">
+            <div class="was-attachment-info">
+              <svg id="attachment-icon" viewBox="0 0 24 24" width="20" height="20"></svg>
+              <span id="attachment-name">archivo.jpg</span>
+            </div>
+            <button class="was-remove-btn" id="remove-attachment-btn">✕</button>
+          </div>
+
+          <!-- Text Area -->
+          <textarea class="was-textarea" id="message-input" placeholder="Escribe tu mensaje aquí...
+
+Usa variables como {{numero}} para personalizar cada mensaje."></textarea>
+
+          <!-- Quick Actions -->
+          <div class="was-quick-actions">
+            <button class="was-quick-btn" id="add-apology-btn">Disculpa por la molestia</button>
+            <button class="was-quick-btn" id="add-timestamp-btn">+ Marca de tiempo</button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Action Buttons -->
+      <footer class="was-footer">
+        <button class="was-btn was-btn-send" id="send-btn">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+          Enviar Mensajes
+        </button>
+        <button class="was-btn was-btn-stop" id="stop-btn" style="display: none;">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+            <path d="M6 6h12v12H6z"/>
+          </svg>
+          <span id="stop-btn-text">Detener Envío</span>
+        </button>
+        
+        <!-- Progress Bar -->
+        <div class="was-progress" id="progress-container" style="display: none;">
+          <div class="was-progress-bar" id="progress-bar"></div>
+          <span class="was-progress-text" id="progress-text">0 / 0</span>
+        </div>
+
+        <div class="was-footer-info">
+          <span>WA Sender Pro v2.1</span>
+          <a href="#" id="show-stats-link">Ver estadísticas →</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="sidebar.js"></script>
+</body>
+</html>
