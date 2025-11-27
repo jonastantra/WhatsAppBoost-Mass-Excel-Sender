@@ -1,6 +1,7 @@
 // ============================================
-// WA Sender Pro v2.1 - Sidebar Logic
+// WA Sender Pro v2.2 - Sidebar Logic
 // Sistema Inteligente de Detección de WhatsApp
+// Con soporte de internacionalización (i18n)
 // ============================================
 
 // --- State ---
@@ -29,10 +30,67 @@ const screens = {
 };
 
 // ============================================
+// i18n - Internationalization Helper
+// ============================================
+
+/**
+ * Get localized message with optional substitutions
+ */
+function i18n(key, ...substitutions) {
+  const message = chrome.i18n.getMessage(key, substitutions);
+  return message || key;
+}
+
+/**
+ * Apply i18n to all elements with data-i18n attributes
+ */
+function applyI18n() {
+  // data-i18n for text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const message = chrome.i18n.getMessage(key);
+    if (message) {
+      el.textContent = message;
+    }
+  });
+
+  // data-i18n-html for innerHTML (with HTML tags)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    const message = chrome.i18n.getMessage(key);
+    if (message) {
+      el.innerHTML = message;
+    }
+  });
+
+  // data-i18n-title for title attributes
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.getAttribute('data-i18n-title');
+    const message = chrome.i18n.getMessage(key);
+    if (message) {
+      el.title = message;
+    }
+  });
+
+  // data-i18n-placeholder for placeholder attributes
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const message = chrome.i18n.getMessage(key);
+    if (message) {
+      el.placeholder = message;
+    }
+  });
+}
+
+// ============================================
 // Initialization - Sistema de Detección Automática
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Apply i18n first
+  applyI18n();
+  
+  // Then initialize app
   initializeApp();
 });
 
@@ -42,14 +100,14 @@ async function initializeApp() {
   // Mostrar pantalla de carga
   showScreen('loading');
   updateLoadingStep('find', 'active');
-  updateLoadingMessage('Buscando WhatsApp Web...');
+  updateLoadingMessage(i18n('msgSearchingWhatsApp'));
   
   try {
     // Paso 1: Buscar o abrir WhatsApp Web
     const findResult = await chrome.runtime.sendMessage({ action: 'findOrOpenWhatsApp' });
     
     if (!findResult.success) {
-      throw new Error(findResult.error || 'No se pudo encontrar WhatsApp Web');
+      throw new Error(findResult.error || i18n('msgCouldNotFindWhatsApp'));
     }
     
     whatsappTabId = findResult.tabId;
@@ -57,9 +115,9 @@ async function initializeApp() {
     updateLoadingStep('connect', 'active');
     
     if (findResult.wasOpen) {
-      updateLoadingMessage('Conectando con WhatsApp Web...');
+      updateLoadingMessage(i18n('msgConnectingWhatsApp'));
     } else {
-      updateLoadingMessage('Esperando que WhatsApp Web cargue...');
+      updateLoadingMessage(i18n('msgWaitingWhatsAppLoad'));
     }
     
     // Paso 2: Esperar a que WhatsApp esté listo
@@ -68,7 +126,7 @@ async function initializeApp() {
     if (ready.success) {
       updateLoadingStep('connect', 'done');
       updateLoadingStep('ready', 'active');
-      updateLoadingMessage('¡Conectado!');
+      updateLoadingMessage(i18n('msgConnected'));
       
       // Pequeña pausa para mostrar el estado final
       await sleep(500);
@@ -122,7 +180,7 @@ async function waitForWhatsAppReady(tabId, maxRetries = 20) {
       
       // Actualizar mensaje de progreso
       const progress = Math.round(((i + 1) / maxRetries) * 100);
-      updateLoadingMessage(`Cargando WhatsApp Web... ${progress}%`);
+      updateLoadingMessage(i18n('msgLoadingWhatsApp', progress.toString()));
       
     } catch (error) {
       console.warn('Error checking WhatsApp ready:', error);
@@ -132,7 +190,7 @@ async function waitForWhatsAppReady(tabId, maxRetries = 20) {
     await sleep(1000);
   }
   
-  return { success: false, error: 'Tiempo de espera agotado' };
+  return { success: false, error: i18n('msgTimeoutExpired') };
 }
 
 // ============================================
@@ -289,10 +347,10 @@ function initEventListeners() {
   
   // Quick actions
   document.getElementById('add-apology-btn')?.addEventListener('click', () => {
-    insertText('\n\nDisculpa por la molestia si este mensaje no es de tu interés.');
+    insertText(i18n('apologyText'));
   });
   document.getElementById('add-timestamp-btn')?.addEventListener('click', () => {
-    insertText(`\n\n📅 ${new Date().toLocaleString('es-MX')}`);
+    insertText(`\n\n📅 ${new Date().toLocaleString()}`);
   });
   
   // Main actions
@@ -367,28 +425,28 @@ function addManualContact() {
   let number = input.value.trim().replace(/\D/g, '');
   
   if (number.length < 10) {
-    showNotification('Por favor ingresa un número válido (mínimo 10 dígitos)', 'error');
+    showNotification(i18n('msgInvalidNumber'), 'error');
     return;
   }
   
   if (contacts.some(c => c.number === number)) {
-    showNotification('Este número ya está en la lista', 'warning');
+    showNotification(i18n('msgNumberAlreadyInList'), 'warning');
     return;
   }
   
   contacts.push({ number, status: 'pending', name: '' });
   input.value = '';
   renderContacts();
-  showNotification(`Número ${number} añadido`, 'success');
+  showNotification(i18n('msgNumberAdded', number), 'success');
 }
 
 function clearContacts() {
   if (contacts.length === 0) return;
   
-  if (confirm('¿Estás seguro de que deseas limpiar toda la lista?')) {
+  if (confirm(i18n('msgConfirmClearList'))) {
     contacts = [];
     renderContacts();
-    showNotification('Lista limpiada', 'success');
+    showNotification(i18n('msgListCleared'), 'success');
   }
 }
 
@@ -407,7 +465,7 @@ function renderContacts() {
         <svg viewBox="0 0 24 24" width="48" height="48" opacity="0.3">
           <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
         </svg>
-        <p>No hay contactos añadidos</p>
+        <p>${i18n('noContactsAdded')}</p>
       </div>
     `;
     return;
@@ -435,10 +493,10 @@ function formatPhoneNumber(number) {
 
 function getStatusText(status) {
   const texts = {
-    pending: 'Pendiente',
-    sending: 'Enviando...',
-    sent: '✓ Enviado',
-    error: '✗ Error'
+    pending: i18n('statusPending'),
+    sending: i18n('statusSendingProgress'),
+    sent: i18n('statusSent'),
+    error: i18n('statusErrorLabel')
   };
   return texts[status] || status;
 }
@@ -494,7 +552,7 @@ function initUploadZone() {
  */
 function downloadExcelTemplate() {
   if (typeof XLSX === 'undefined') {
-    showNotification('Error: Biblioteca Excel no cargada', 'error');
+    showNotification(i18n('msgExcelLibNotLoaded'), 'error');
     return;
   }
   
@@ -522,7 +580,7 @@ function downloadExcelTemplate() {
   XLSX.utils.book_append_sheet(wb, ws, 'Contactos');
   
   XLSX.writeFile(wb, 'WA_Sender_Pro_Template.xlsx');
-  showNotification('✓ Plantilla Excel descargada', 'success');
+  showNotification(i18n('msgExcelTemplateDownloaded'), 'success');
 }
 
 /**
@@ -556,7 +614,7 @@ function downloadCSVTemplate() {
   document.body.removeChild(link);
   
   URL.revokeObjectURL(url);
-  showNotification('✓ Plantilla CSV descargada', 'success');
+  showNotification(i18n('msgCsvTemplateDownloaded'), 'success');
 }
 
 /**
@@ -568,7 +626,7 @@ async function handleFileUpload(event) {
   
   // Validar tamaño (máximo 5MB)
   if (file.size > 5 * 1024 * 1024) {
-    showNotification('Error: El archivo es demasiado grande (máximo 5MB)', 'error');
+    showNotification(i18n('msgFileTooLarge'), 'error');
     return;
   }
   
@@ -586,11 +644,11 @@ async function handleFileUpload(event) {
     } else if (fileExt === 'csv' || fileExt === 'txt') {
       parsedData = await parseCSVAdvanced(file);
     } else {
-      throw new Error('Formato no soportado. Use Excel (.xlsx, .xls) o CSV');
+      throw new Error(i18n('msgFormatNotSupported'));
     }
     
     if (parsedData.contacts.length === 0) {
-      throw new Error('No se encontraron contactos válidos en el archivo');
+      throw new Error(i18n('msgNoValidContacts'));
     }
     
     // Guardar datos pendientes y mostrar preview
@@ -641,7 +699,7 @@ async function parseExcelAdvanced(file) {
     reader.onload = (e) => {
       try {
         if (typeof XLSX === 'undefined') {
-          reject(new Error('Biblioteca Excel no disponible'));
+          reject(new Error(i18n('msgExcelLibNotLoaded')));
           return;
         }
         
@@ -651,7 +709,7 @@ async function parseExcelAdvanced(file) {
         const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
         
         if (jsonData.length < 2) {
-          reject(new Error('El archivo está vacío o no tiene datos'));
+          reject(new Error(i18n('msgFileEmptyOrNoData')));
           return;
         }
         
@@ -661,7 +719,7 @@ async function parseExcelAdvanced(file) {
         const nameCol = findNameColumn(headers);
         
         if (phoneCol === -1) {
-          reject(new Error('No se encontró columna de teléfono (phone, number, telefono, whatsapp)'));
+          reject(new Error(i18n('msgNoPhoneColumn')));
           return;
         }
         
@@ -692,10 +750,10 @@ async function parseExcelAdvanced(file) {
         
       } catch (err) {
         console.error('Excel parse error:', err);
-        reject(new Error('Error al leer el archivo Excel'));
+        reject(new Error(i18n('msgExcelReadError')));
       }
     };
-    reader.onerror = () => reject(new Error('Error al cargar el archivo'));
+    reader.onerror = () => reject(new Error(i18n('msgFileLoadError')));
     reader.readAsArrayBuffer(file);
   });
 }
@@ -712,7 +770,7 @@ async function parseCSVAdvanced(file) {
         const lines = text.split(/\r\n|\n|\r/).filter(line => line.trim());
         
         if (lines.length < 2) {
-          reject(new Error('El archivo está vacío o no tiene datos'));
+          reject(new Error(i18n('msgFileEmptyOrNoData')));
           return;
         }
         
@@ -725,7 +783,7 @@ async function parseCSVAdvanced(file) {
         const nameCol = findNameColumn(headers);
         
         if (phoneCol === -1) {
-          reject(new Error('No se encontró columna de teléfono (phone, number, telefono, whatsapp)'));
+          reject(new Error(i18n('msgNoPhoneColumn')));
           return;
         }
         
@@ -756,10 +814,10 @@ async function parseCSVAdvanced(file) {
         
       } catch (err) {
         console.error('CSV parse error:', err);
-        reject(new Error('Error al leer el archivo CSV'));
+        reject(new Error(i18n('msgCsvReadError')));
       }
     };
-    reader.onerror = () => reject(new Error('Error al cargar el archivo'));
+    reader.onerror = () => reject(new Error(i18n('msgFileLoadError')));
     reader.readAsText(file, 'UTF-8');
   });
 }
@@ -845,7 +903,7 @@ function showImportPreview(data) {
   
   // Actualizar contador
   if (previewCount) {
-    previewCount.textContent = `${contacts.length} contactos`;
+    previewCount.textContent = i18n('contactsCount', contacts.length.toString());
   }
   
   // Generar filas de preview (máximo 10)
@@ -865,7 +923,7 @@ function showImportPreview(data) {
   if (contacts.length > 10) {
     previewTable.innerHTML += `
       <div class="was-preview-row" style="justify-content: center; color: var(--was-text-muted);">
-        ... y ${contacts.length - 10} más
+        ${i18n('andMoreContacts', (contacts.length - 10).toString())}
       </div>
     `;
   }
@@ -878,7 +936,7 @@ function showImportPreview(data) {
       result.style.background = '#fef3c7';
       result.style.color = '#92400e';
       result.style.border = '1px solid #fcd34d';
-      result.innerHTML = `⚠️ ${invalid.length} números inválidos serán omitidos`;
+      result.innerHTML = i18n('msgInvalidNumbersOmitted', invalid.length.toString());
       result.style.display = 'block';
     }
   }
@@ -908,7 +966,11 @@ function confirmImport() {
   renderContacts();
   resetUploadUI();
   
-  showNotification(`✓ ${added} contactos importados${duplicates > 0 ? ` (${duplicates} duplicados)` : ''}`, 'success');
+  let message = i18n('msgContactsImported', added.toString());
+  if (duplicates > 0) {
+    message += ' ' + i18n('msgDuplicates', duplicates.toString());
+  }
+  showNotification(message, 'success');
   
   // Cambiar a tab manual para ver los contactos
   setTimeout(() => switchTab('tab-manual'), 500);
@@ -948,8 +1010,8 @@ function showImportResult(success, message) {
   
   result.className = `was-import-result ${success ? 'success' : 'error'}`;
   result.innerHTML = success
-    ? `<strong>✓ Importación exitosa</strong><br>${message}`
-    : `<strong>✗ Error:</strong> ${message}`;
+    ? `<strong>✓</strong> ${message}`
+    : `<strong>✗</strong> ${message}`;
   result.style.display = 'block';
 }
 
@@ -981,7 +1043,7 @@ async function scrapeGroupMembers() {
   // Deshabilitar botón y mostrar estado
   if (btn) btn.disabled = true;
   if (statusDiv) statusDiv.style.display = 'flex';
-  if (statusMsg) statusMsg.textContent = 'Buscando miembros del grupo...';
+  if (statusMsg) statusMsg.textContent = i18n('msgSearchingGroupMembers');
   if (previewDiv) previewDiv.style.display = 'none';
   
   try {
@@ -989,7 +1051,7 @@ async function scrapeGroupMembers() {
     await chrome.runtime.sendMessage({ action: 'focusWhatsAppTab' });
     await sleep(500);
     
-    if (statusMsg) statusMsg.textContent = 'Analizando participantes...';
+    if (statusMsg) statusMsg.textContent = i18n('msgAnalyzingParticipants');
     
     // Llamar al content script
     const response = await sendToContent({ action: 'scrapeGroup' });
@@ -1001,14 +1063,14 @@ async function scrapeGroupMembers() {
     const members = response.members || [];
     
     if (members.length === 0) {
-      throw new Error('No se encontraron números de teléfono.\n\nAsegúrate de:\n• Estar en la info del grupo\n• Que los participantes sean visibles\n• Desplazarte para ver más');
+      throw new Error(i18n('msgNoPhoneNumbersFound'));
     }
     
     // Guardar miembros pendientes y mostrar preview
     pendingGroupMembers = members;
     showGroupMembersPreview(members);
     
-    if (statusMsg) statusMsg.textContent = `¡${members.length} miembros encontrados!`;
+    if (statusMsg) statusMsg.textContent = i18n('msgMembersFound', members.length.toString());
     
     // Ocultar estado después de un momento
     setTimeout(() => {
@@ -1018,11 +1080,11 @@ async function scrapeGroupMembers() {
   } catch (error) {
     console.error('Error scraping group:', error);
     
-    if (statusMsg) statusMsg.textContent = 'Error al extraer miembros';
+    if (statusMsg) statusMsg.textContent = i18n('msgErrorExtractingMembers');
     
     setTimeout(() => {
       if (statusDiv) statusDiv.style.display = 'none';
-      showNotification(error.message || 'Error al obtener miembros', 'error');
+      showNotification(error.message || i18n('msgErrorGettingMembers'), 'error');
     }, 1000);
     
   } finally {
@@ -1053,7 +1115,7 @@ function showGroupMembersPreview(members) {
         <svg viewBox="0 0 24 24" width="14" height="14">
           <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
         </svg>
-        Válido
+        ${i18n('validLabel')}
       </span>
     </div>
   `).join('');
@@ -1062,7 +1124,7 @@ function showGroupMembersPreview(members) {
   if (members.length > 15) {
     listDiv.innerHTML += `
       <div class="was-members-more">
-        ... y ${members.length - 15} miembros más
+        ${i18n('andMoreMembers', (members.length - 15).toString())}
       </div>
     `;
   }
@@ -1109,9 +1171,9 @@ function confirmGroupImport() {
   renderContacts();
   
   // Mostrar resultado
-  let message = `✓ ${added} miembros añadidos a la lista`;
+  let message = i18n('msgMembersAddedToList', added.toString());
   if (duplicates > 0) {
-    message += ` (${duplicates} duplicados)`;
+    message += ' ' + i18n('msgDuplicates', duplicates.toString());
   }
   showNotification(message, 'success');
   
@@ -1126,7 +1188,7 @@ function cancelGroupImport() {
   pendingGroupMembers = [];
   const previewDiv = document.getElementById('group-members-preview');
   if (previewDiv) previewDiv.style.display = 'none';
-  showNotification('Importación cancelada', 'info');
+  showNotification(i18n('msgImportCancelled'), 'info');
 }
 
 // ============================================
@@ -1139,7 +1201,7 @@ function updateTemplateSelect() {
   
   if (!select) return;
   
-  select.innerHTML = '<option value="">Seleccionar plantilla...</option>';
+  select.innerHTML = `<option value="">${i18n('selectTemplate')}</option>`;
   
   templates.forEach((t, i) => {
     const option = document.createElement('option');
@@ -1163,7 +1225,7 @@ function applyTemplate() {
   if (template) {
     const msgInput = document.getElementById('message-input');
     if (msgInput) msgInput.value = template.text;
-    showNotification(`Plantilla "${template.name}" aplicada`, 'success');
+    showNotification(i18n('msgTemplateApplied', template.name), 'success');
   }
 }
 
@@ -1172,17 +1234,17 @@ async function saveTemplate() {
   const text = msgInput?.value.trim();
   
   if (!text) {
-    showNotification('Escribe un mensaje primero', 'warning');
+    showNotification(i18n('msgWriteMessageFirst'), 'warning');
     return;
   }
   
-  const name = prompt('Nombre para la plantilla:');
+  const name = prompt(i18n('promptTemplateName'));
   if (!name) return;
   
   templates.push({ name: name.trim(), text });
   await chrome.storage.local.set({ templates });
   updateTemplateSelect();
-  showNotification(`Plantilla "${name}" guardada`, 'success');
+  showNotification(i18n('msgTemplateSaved', name), 'success');
 }
 
 async function deleteTemplate() {
@@ -1190,17 +1252,17 @@ async function deleteTemplate() {
   const idx = parseInt(select?.value);
   
   if (isNaN(idx)) {
-    showNotification('Selecciona una plantilla para eliminar', 'warning');
+    showNotification(i18n('msgSelectTemplateToDelete'), 'warning');
     return;
   }
   
   const template = templates[idx];
-  if (confirm(`¿Eliminar la plantilla "${template.name}"?`)) {
+  if (confirm(i18n('confirmDeleteTemplate', template.name))) {
     templates.splice(idx, 1);
     await chrome.storage.local.set({ templates });
     updateTemplateSelect();
     if (select) select.value = '';
-    showNotification('Plantilla eliminada', 'success');
+    showNotification(i18n('msgTemplateDeleted'), 'success');
   }
 }
 
@@ -1276,7 +1338,7 @@ function handleAttachment(event) {
   }
   
   if (preview) preview.style.display = 'flex';
-  showNotification(`Archivo "${file.name}" adjuntado`, 'success');
+  showNotification(i18n('msgFileAttached', file.name), 'success');
 }
 
 function removeAttachment() {
@@ -1316,7 +1378,7 @@ async function resetStats() {
   const stats = { totalSent: 0, totalFailed: 0, lastSession: null };
   await chrome.storage.local.set({ stats });
   updateStatsDisplay(stats);
-  showNotification('Estadísticas reiniciadas', 'success');
+  showNotification(i18n('msgStatsReset'), 'success');
 }
 
 function updateStatsDisplay(stats) {
@@ -1342,19 +1404,19 @@ async function sendTestMessage() {
   const message = msgInput?.value.trim();
   
   if (!message && !currentAttachment) {
-    showNotification('Escribe un mensaje o adjunta un archivo', 'warning');
+    showNotification(i18n('msgWriteMessageOrAttach'), 'warning');
     return;
   }
   
   let testNumber = await getTestNumber();
   if (!testNumber) return;
   
-  showNotification('Enviando mensaje de prueba...', 'info');
+  showNotification(i18n('msgSendingTestMessage'), 'info');
   
   try {
     const result = await sendSingleMessage(testNumber, message);
     if (result.success) {
-      showNotification('¡Prueba enviada con éxito!', 'success');
+      showNotification(i18n('msgTestSentSuccess'), 'success');
     } else {
       showNotification(`Error: ${result.error}`, 'error');
     }
@@ -1368,7 +1430,7 @@ async function getTestNumber() {
   let testNumber = result.testNumber;
   
   if (!testNumber) {
-    testNumber = prompt('Ingresa tu número para pruebas (con código de país, ej: 521234567890):');
+    testNumber = prompt(i18n('promptTestNumber'));
     if (testNumber) {
       testNumber = testNumber.replace(/\D/g, '');
       await chrome.storage.local.set({ testNumber });
@@ -1383,17 +1445,17 @@ async function startSending() {
   const message = msgInput?.value.trim();
   
   if (!message && !currentAttachment) {
-    showNotification('Escribe un mensaje o adjunta un archivo', 'warning');
+    showNotification(i18n('msgWriteMessageOrAttach'), 'warning');
     return;
   }
   
   const pendingContacts = contacts.filter(c => c.status === 'pending');
   if (pendingContacts.length === 0) {
-    showNotification('No hay contactos pendientes para enviar', 'warning');
+    showNotification(i18n('msgNoPendingContacts'), 'warning');
     return;
   }
   
-  if (!confirm(`¿Enviar mensaje a ${pendingContacts.length} contactos?`)) {
+  if (!confirm(i18n('confirmSendToContacts', pendingContacts.length.toString()))) {
     return;
   }
   
@@ -1426,7 +1488,7 @@ async function startSending() {
       }
       
       if (settings.addTimestamp) {
-        finalMessage += `\n\n📅 ${new Date().toLocaleString('es-MX')}`;
+        finalMessage += `\n\n📅 ${new Date().toLocaleString()}`;
       }
       
       const result = await sendSingleMessage(contacts[i].number, finalMessage);
@@ -1460,15 +1522,15 @@ async function startSending() {
   updateUIState(false);
   
   if (shouldStop) {
-    showNotification('Envío detenido', 'warning');
+    showNotification(i18n('msgSendingStopped'), 'warning');
   } else {
-    showNotification(`Completado: ${sent} enviados, ${failed} fallidos`, 'success');
+    showNotification(i18n('msgSendingComplete', sent.toString(), failed.toString()), 'success');
   }
 }
 
 function stopSending() {
   shouldStop = true;
-  showNotification('Deteniendo envío...', 'warning');
+  showNotification(i18n('msgStoppingSending'), 'warning');
 }
 
 async function sendSingleMessage(phone, text) {
@@ -1494,7 +1556,7 @@ function processVariables(text, contact) {
   return text
     .replace(/\{\{numero\}\}/gi, contact.number)
     .replace(/\{\{nombre\}\}/gi, contact.name || '')
-    .replace(/\{\{fecha\}\}/gi, new Date().toLocaleDateString('es-MX'));
+    .replace(/\{\{fecha\}\}/gi, new Date().toLocaleDateString());
 }
 
 async function updateGlobalStats(type) {
@@ -1549,11 +1611,11 @@ async function countdown(ms) {
   
   for (let i = seconds; i > 0; i--) {
     if (shouldStop) break;
-    if (stopBtnText) stopBtnText.textContent = `Esperando ${i}s...`;
+    if (stopBtnText) stopBtnText.textContent = i18n('msgWaitingSeconds', i.toString());
     await sleep(1000);
   }
   
-  if (stopBtnText) stopBtnText.textContent = 'Detener Envío';
+  if (stopBtnText) stopBtnText.textContent = i18n('stopSending');
 }
 
 function scrollToContact(index) {
@@ -1614,7 +1676,7 @@ function showNotification(message, type = 'info') {
   statusText.textContent = message;
   
   setTimeout(() => {
-    statusText.textContent = 'Conectado a WhatsApp Web';
+    statusText.textContent = i18n('statusConnected');
     statusDot.style.background = '#22c55e';
   }, 3000);
 }

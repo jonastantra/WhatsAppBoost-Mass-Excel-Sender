@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "WA Sender Pro",
-  "version": "2.1.2",
-  "description": "Envío masivo de mensajes para WhatsApp Web con interfaz profesional.",
+  "name": "__MSG_extName__",
+  "version": "2.2.0",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
   "permissions": [
     "storage",
     "activeTab",
@@ -28,7 +29,7 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Abrir WA Sender Pro",
+    "default_title": "__MSG_actionTitle__",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",

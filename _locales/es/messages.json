@@ -1,0 +1,758 @@
+{
+  "extName": {
+    "message": "WA Sender Pro",
+    "description": "Nombre de la extensión"
+  },
+  "extDescription": {
+    "message": "Envío masivo de mensajes para WhatsApp Web con interfaz profesional.",
+    "description": "Descripción de la extensión"
+  },
+  "actionTitle": {
+    "message": "Abrir WA Sender Pro",
+    "description": "Título del botón de acción"
+  },
+
+  "appName": {
+    "message": "WA Sender Pro",
+    "description": "Nombre de la app en el header"
+  },
+  "quickSendTitle": {
+    "message": "Envío rápido",
+    "description": "Título del botón de envío rápido"
+  },
+
+  "loadingInitializing": {
+    "message": "Inicializando...",
+    "description": "Mensaje inicial de carga"
+  },
+  "loadingSearchingWhatsApp": {
+    "message": "Buscando WhatsApp Web",
+    "description": "Paso de carga - buscando"
+  },
+  "loadingConnecting": {
+    "message": "Conectando",
+    "description": "Paso de carga - conectando"
+  },
+  "loadingReady": {
+    "message": "Listo",
+    "description": "Paso de carga - listo"
+  },
+
+  "qrTitle": {
+    "message": "Escanea el código QR",
+    "description": "Título de pantalla QR"
+  },
+  "qrMessage": {
+    "message": "Abre WhatsApp en tu teléfono y escanea el código QR para continuar.",
+    "description": "Mensaje de pantalla QR"
+  },
+  "qrStep1": {
+    "message": "1. Abre WhatsApp en tu teléfono",
+    "description": "Instrucción QR paso 1"
+  },
+  "qrStep2": {
+    "message": "2. Toca $MENU$ o $SETTINGS$",
+    "description": "Instrucción QR paso 2",
+    "placeholders": {
+      "menu": { "content": "Menú" },
+      "settings": { "content": "Configuración" }
+    }
+  },
+  "qrStep3": {
+    "message": "3. Selecciona $LINKED_DEVICES$",
+    "description": "Instrucción QR paso 3",
+    "placeholders": {
+      "linked_devices": { "content": "Dispositivos vinculados" }
+    }
+  },
+  "qrStep4": {
+    "message": "4. Toca $LINK_DEVICE$",
+    "description": "Instrucción QR paso 4",
+    "placeholders": {
+      "link_device": { "content": "Vincular un dispositivo" }
+    }
+  },
+  "btnVerifyConnection": {
+    "message": "Verificar conexión",
+    "description": "Botón para verificar conexión"
+  },
+
+  "errorTitle": {
+    "message": "Error de Conexión",
+    "description": "Título de pantalla de error"
+  },
+  "errorDefaultMessage": {
+    "message": "No se pudo conectar con WhatsApp Web",
+    "description": "Mensaje de error por defecto"
+  },
+  "btnRetry": {
+    "message": "Reintentar",
+    "description": "Botón reintentar"
+  },
+  "btnOpenWhatsAppWeb": {
+    "message": "Abrir WhatsApp Web",
+    "description": "Botón abrir WhatsApp Web"
+  },
+
+  "statusConnected": {
+    "message": "Conectado a WhatsApp Web",
+    "description": "Mensaje de barra de estado conectado"
+  },
+
+  "tabManual": {
+    "message": "Manual",
+    "description": "Pestaña manual"
+  },
+  "tabExcel": {
+    "message": "Excel/CSV",
+    "description": "Pestaña Excel/CSV"
+  },
+  "tabGroups": {
+    "message": "Grupos",
+    "description": "Pestaña grupos"
+  },
+  "tabSettings": {
+    "message": "Ajustes",
+    "description": "Pestaña ajustes"
+  },
+
+  "addNumbers": {
+    "message": "Añadir Números",
+    "description": "Título de tarjeta añadir números"
+  },
+  "addTitle": {
+    "message": "Añadir",
+    "description": "Título del botón añadir"
+  },
+  "noContactsAdded": {
+    "message": "No hay contactos añadidos",
+    "description": "Mensaje de estado vacío"
+  },
+  "clearList": {
+    "message": "Limpiar Lista",
+    "description": "Botón limpiar lista"
+  },
+  "totalLabel": {
+    "message": "Total:",
+    "description": "Etiqueta de total de contactos"
+  },
+
+  "howToUseTemplates": {
+    "message": "¿Cómo usar las plantillas?",
+    "description": "Título de instrucciones de plantilla"
+  },
+  "templateStep1": {
+    "message": "Descarga la plantilla de ejemplo",
+    "description": "Instrucción plantilla 1"
+  },
+  "templateStep2": {
+    "message": "Llena los datos de tus contactos",
+    "description": "Instrucción plantilla 2"
+  },
+  "templateStep3": {
+    "message": "Sube el archivo aquí",
+    "description": "Instrucción plantilla 3"
+  },
+  "downloadTemplate": {
+    "message": "📥 Descargar Plantilla",
+    "description": "Título de tarjeta descargar plantilla"
+  },
+  "excelXlsx": {
+    "message": "Excel (.xlsx)",
+    "description": "Etiqueta formato Excel"
+  },
+  "recommended": {
+    "message": "Recomendado",
+    "description": "Etiqueta recomendado"
+  },
+  "csvLabel": {
+    "message": "CSV",
+    "description": "Etiqueta formato CSV"
+  },
+  "simple": {
+    "message": "Simple",
+    "description": "Etiqueta simple"
+  },
+  "availableColumns": {
+    "message": "Columnas disponibles:",
+    "description": "Etiqueta columnas disponibles"
+  },
+  "phoneColumnRequired": {
+    "message": "La columna $COLUMN$ es obligatoria",
+    "description": "Indicación columna teléfono requerida",
+    "placeholders": {
+      "column": { "content": "phone" }
+    }
+  },
+  "uploadFile": {
+    "message": "📤 Subir Archivo",
+    "description": "Título de tarjeta subir archivo"
+  },
+  "dragFileHere": {
+    "message": "Arrastra tu archivo aquí",
+    "description": "Mensaje de arrastrar y soltar"
+  },
+  "orDivider": {
+    "message": "— o —",
+    "description": "Texto divisor o"
+  },
+  "selectFile": {
+    "message": "Seleccionar Archivo",
+    "description": "Botón seleccionar archivo"
+  },
+  "uploadHint": {
+    "message": "Excel (.xlsx, .xls), CSV, TXT — Máximo 5MB",
+    "description": "Texto de ayuda de subida"
+  },
+  "removeTitle": {
+    "message": "Eliminar",
+    "description": "Título del botón eliminar"
+  },
+  "preview": {
+    "message": "Vista Previa",
+    "description": "Título de vista previa"
+  },
+  "contactsCount": {
+    "message": "$COUNT$ contactos",
+    "description": "Conteo de contactos",
+    "placeholders": {
+      "count": { "content": "$1", "example": "10" }
+    }
+  },
+  "btnCancel": {
+    "message": "Cancelar",
+    "description": "Botón cancelar"
+  },
+  "btnImportContacts": {
+    "message": "Importar Contactos",
+    "description": "Botón importar contactos"
+  },
+
+  "extractGroupMembers": {
+    "message": "Extraer Miembros de Grupo",
+    "description": "Título de tarjeta grupos"
+  },
+  "groupStep1": {
+    "message": "Abre un $GROUP$ en WhatsApp Web",
+    "description": "Instrucción grupo 1",
+    "placeholders": {
+      "group": { "content": "grupo" }
+    }
+  },
+  "groupStep2": {
+    "message": "Haz clic en el $GROUP_NAME$ (arriba)",
+    "description": "Instrucción grupo 2",
+    "placeholders": {
+      "group_name": { "content": "nombre del grupo" }
+    }
+  },
+  "groupStep3": {
+    "message": "Desplázate para ver la $PARTICIPANTS_LIST$",
+    "description": "Instrucción grupo 3",
+    "placeholders": {
+      "participants_list": { "content": "lista de participantes" }
+    }
+  },
+  "groupStep4": {
+    "message": "Haz clic en el botón de abajo",
+    "description": "Instrucción grupo 4"
+  },
+  "getGroupMembers": {
+    "message": "Obtener Miembros del Grupo",
+    "description": "Botón obtener miembros del grupo"
+  },
+  "extractNumbersFromGroup": {
+    "message": "Extrae los números del grupo abierto",
+    "description": "Descripción del botón obtener miembros"
+  },
+  "searchingMembers": {
+    "message": "Buscando miembros...",
+    "description": "Estado buscando miembros"
+  },
+  "membersFound": {
+    "message": "👥 Miembros Encontrados",
+    "description": "Título de tarjeta miembros encontrados"
+  },
+  "btnAddToList": {
+    "message": "Añadir a la Lista",
+    "description": "Botón añadir a la lista"
+  },
+  "responsibleUse": {
+    "message": "Uso Responsable:",
+    "description": "Título de descargo"
+  },
+  "disclaimerText": {
+    "message": "Esta función es para uso personal. No uses los números extraídos para spam. Respeta las políticas de WhatsApp.",
+    "description": "Texto de descargo"
+  },
+
+  "sendingConfig": {
+    "message": "Configuración de Envío",
+    "description": "Título de tarjeta configuración"
+  },
+  "sendingInterval": {
+    "message": "Intervalo de envío",
+    "description": "Etiqueta intervalo de envío"
+  },
+  "sendingIntervalDesc": {
+    "message": "Los mensajes se enviarán aleatoriamente en este rango",
+    "description": "Descripción intervalo de envío"
+  },
+  "secondsUnit": {
+    "message": "seg",
+    "description": "Unidad de segundos"
+  },
+  "antiBanLabel": {
+    "message": "Anti-Bloqueo (ID único)",
+    "description": "Etiqueta configuración anti-bloqueo"
+  },
+  "antiBanDesc": {
+    "message": "Añade un identificador único a cada mensaje",
+    "description": "Descripción configuración anti-bloqueo"
+  },
+  "deleteChatLabel": {
+    "message": "Eliminar chat después de enviar",
+    "description": "Etiqueta configuración eliminar chat"
+  },
+  "deleteChatDesc": {
+    "message": "Archiva el chat automáticamente",
+    "description": "Descripción configuración eliminar chat"
+  },
+  "timestampLabel": {
+    "message": "Agregar marca de tiempo",
+    "description": "Etiqueta configuración marca de tiempo"
+  },
+  "timestampDesc": {
+    "message": "Añade la hora al final del mensaje",
+    "description": "Descripción configuración marca de tiempo"
+  },
+  "statistics": {
+    "message": "Estadísticas",
+    "description": "Título de tarjeta estadísticas"
+  },
+  "sentLabel": {
+    "message": "Enviados",
+    "description": "Etiqueta stat enviados"
+  },
+  "failedLabel": {
+    "message": "Fallidos",
+    "description": "Etiqueta stat fallidos"
+  },
+  "pendingLabel": {
+    "message": "Pendientes",
+    "description": "Etiqueta stat pendientes"
+  },
+  "resetStats": {
+    "message": "Reiniciar Estadísticas",
+    "description": "Botón reiniciar estadísticas"
+  },
+
+  "messageLabel": {
+    "message": "Mensaje",
+    "description": "Título del compositor de mensajes"
+  },
+  "testMessage": {
+    "message": "Hacer prueba",
+    "description": "Botón mensaje de prueba"
+  },
+  "selectTemplate": {
+    "message": "Seleccionar plantilla...",
+    "description": "Placeholder del selector de plantilla"
+  },
+  "saveTemplateTitle": {
+    "message": "Guardar plantilla",
+    "description": "Título del botón guardar plantilla"
+  },
+  "deleteTemplateTitle": {
+    "message": "Eliminar plantilla",
+    "description": "Título del botón eliminar plantilla"
+  },
+  "variablesLabel": {
+    "message": "Variables:",
+    "description": "Etiqueta de variables"
+  },
+  "varNumber": {
+    "message": "Número",
+    "description": "Botón variable número"
+  },
+  "varName": {
+    "message": "Nombre",
+    "description": "Botón variable nombre"
+  },
+  "varDate": {
+    "message": "Fecha",
+    "description": "Botón variable fecha"
+  },
+  "boldTitle": {
+    "message": "Negrita",
+    "description": "Título del botón formato negrita"
+  },
+  "italicTitle": {
+    "message": "Cursiva",
+    "description": "Título del botón formato cursiva"
+  },
+  "strikeTitle": {
+    "message": "Tachado",
+    "description": "Título del botón formato tachado"
+  },
+  "codeTitle": {
+    "message": "Código",
+    "description": "Título del botón formato código"
+  },
+  "attachLabel": {
+    "message": "Adjuntar",
+    "description": "Etiqueta del botón adjuntar"
+  },
+  "messagePlaceholder": {
+    "message": "Escribe tu mensaje aquí...\n\nUsa variables como {{numero}} para personalizar cada mensaje.",
+    "description": "Placeholder del textarea de mensaje"
+  },
+  "apologyButton": {
+    "message": "Disculpa por la molestia",
+    "description": "Botón de acción rápida disculpa"
+  },
+  "addTimestampBtn": {
+    "message": "+ Marca de tiempo",
+    "description": "Botón de acción rápida añadir marca de tiempo"
+  },
+
+  "sendMessages": {
+    "message": "Enviar Mensajes",
+    "description": "Botón enviar mensajes"
+  },
+  "stopSending": {
+    "message": "Detener Envío",
+    "description": "Botón detener envío"
+  },
+  "viewStats": {
+    "message": "Ver estadísticas →",
+    "description": "Enlace ver estadísticas"
+  },
+
+  "msgSearchingWhatsApp": {
+    "message": "Buscando WhatsApp Web...",
+    "description": "Mensaje buscando WhatsApp"
+  },
+  "msgCouldNotFindWhatsApp": {
+    "message": "No se pudo encontrar WhatsApp Web",
+    "description": "Error no se encontró WhatsApp"
+  },
+  "msgConnectingWhatsApp": {
+    "message": "Conectando con WhatsApp Web...",
+    "description": "Mensaje conectando"
+  },
+  "msgWaitingWhatsAppLoad": {
+    "message": "Esperando que WhatsApp Web cargue...",
+    "description": "Mensaje esperando carga"
+  },
+  "msgConnected": {
+    "message": "¡Conectado!",
+    "description": "Mensaje conectado"
+  },
+  "msgLoadingWhatsApp": {
+    "message": "Cargando WhatsApp Web... $PERCENT$%",
+    "description": "Cargando con porcentaje",
+    "placeholders": {
+      "percent": { "content": "$1", "example": "50" }
+    }
+  },
+  "msgTimeoutExpired": {
+    "message": "Tiempo de espera agotado",
+    "description": "Mensaje de error tiempo agotado"
+  },
+  "msgInvalidNumber": {
+    "message": "Por favor ingresa un número válido (mínimo 10 dígitos)",
+    "description": "Error número inválido"
+  },
+  "msgNumberAlreadyInList": {
+    "message": "Este número ya está en la lista",
+    "description": "Advertencia número duplicado"
+  },
+  "msgNumberAdded": {
+    "message": "Número $NUMBER$ añadido",
+    "description": "Notificación número añadido",
+    "placeholders": {
+      "number": { "content": "$1", "example": "521234567890" }
+    }
+  },
+  "msgConfirmClearList": {
+    "message": "¿Estás seguro de que deseas limpiar toda la lista?",
+    "description": "Confirmar limpiar lista"
+  },
+  "msgListCleared": {
+    "message": "Lista limpiada",
+    "description": "Notificación lista limpiada"
+  },
+
+  "statusPending": {
+    "message": "Pendiente",
+    "description": "Estado pendiente"
+  },
+  "statusSendingProgress": {
+    "message": "Enviando...",
+    "description": "Estado enviando"
+  },
+  "statusSent": {
+    "message": "✓ Enviado",
+    "description": "Estado enviado"
+  },
+  "statusErrorLabel": {
+    "message": "✗ Error",
+    "description": "Estado error"
+  },
+
+  "msgExcelLibNotLoaded": {
+    "message": "Error: Biblioteca Excel no cargada",
+    "description": "Error biblioteca Excel"
+  },
+  "msgExcelTemplateDownloaded": {
+    "message": "✓ Plantilla Excel descargada",
+    "description": "Plantilla Excel descargada"
+  },
+  "msgCsvTemplateDownloaded": {
+    "message": "✓ Plantilla CSV descargada",
+    "description": "Plantilla CSV descargada"
+  },
+  "msgFileTooLarge": {
+    "message": "Error: El archivo es demasiado grande (máximo 5MB)",
+    "description": "Error archivo muy grande"
+  },
+  "msgFormatNotSupported": {
+    "message": "Formato no soportado. Use Excel (.xlsx, .xls) o CSV",
+    "description": "Error formato no soportado"
+  },
+  "msgNoValidContacts": {
+    "message": "No se encontraron contactos válidos en el archivo",
+    "description": "Error no hay contactos válidos"
+  },
+  "msgFileEmptyOrNoData": {
+    "message": "El archivo está vacío o no tiene datos",
+    "description": "Error archivo vacío"
+  },
+  "msgExcelReadError": {
+    "message": "Error al leer el archivo Excel",
+    "description": "Error lectura Excel"
+  },
+  "msgCsvReadError": {
+    "message": "Error al leer el archivo CSV",
+    "description": "Error lectura CSV"
+  },
+  "msgFileLoadError": {
+    "message": "Error al cargar el archivo",
+    "description": "Error carga de archivo"
+  },
+  "msgNoPhoneColumn": {
+    "message": "No se encontró columna de teléfono (phone, number, telefono, whatsapp)",
+    "description": "Error no hay columna de teléfono"
+  },
+  "validLabel": {
+    "message": "Válido",
+    "description": "Etiqueta válido"
+  },
+  "andMoreContacts": {
+    "message": "... y $COUNT$ más",
+    "description": "Y más contactos",
+    "placeholders": {
+      "count": { "content": "$1", "example": "10" }
+    }
+  },
+  "msgInvalidNumbersOmitted": {
+    "message": "⚠️ $COUNT$ números inválidos serán omitidos",
+    "description": "Advertencia números inválidos",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "msgContactsImported": {
+    "message": "✓ $COUNT$ contactos importados",
+    "description": "Notificación contactos importados",
+    "placeholders": {
+      "count": { "content": "$1", "example": "10" }
+    }
+  },
+  "msgDuplicates": {
+    "message": "($COUNT$ duplicados)",
+    "description": "Conteo de duplicados",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" }
+    }
+  },
+  "msgImportCancelled": {
+    "message": "Importación cancelada",
+    "description": "Notificación importación cancelada"
+  },
+
+  "msgSearchingGroupMembers": {
+    "message": "Buscando miembros del grupo...",
+    "description": "Buscando miembros del grupo"
+  },
+  "msgAnalyzingParticipants": {
+    "message": "Analizando participantes...",
+    "description": "Analizando participantes"
+  },
+  "msgMembersFound": {
+    "message": "¡$COUNT$ miembros encontrados!",
+    "description": "Notificación miembros encontrados",
+    "placeholders": {
+      "count": { "content": "$1", "example": "25" }
+    }
+  },
+  "msgErrorExtractingMembers": {
+    "message": "Error al extraer miembros",
+    "description": "Error extrayendo miembros"
+  },
+  "msgErrorGettingMembers": {
+    "message": "Error al obtener miembros",
+    "description": "Error obteniendo miembros"
+  },
+  "msgNoPhoneNumbersFound": {
+    "message": "No se encontraron números de teléfono.\n\nAsegúrate de:\n• Estar en la info del grupo\n• Que los participantes sean visibles\n• Desplazarte para ver más",
+    "description": "Error no se encontraron números"
+  },
+  "msgMembersAddedToList": {
+    "message": "✓ $COUNT$ miembros añadidos a la lista",
+    "description": "Notificación miembros añadidos",
+    "placeholders": {
+      "count": { "content": "$1", "example": "20" }
+    }
+  },
+  "andMoreMembers": {
+    "message": "... y $COUNT$ miembros más",
+    "description": "Y más miembros",
+    "placeholders": {
+      "count": { "content": "$1", "example": "15" }
+    }
+  },
+
+  "msgTemplateApplied": {
+    "message": "Plantilla \"$NAME$\" aplicada",
+    "description": "Notificación plantilla aplicada",
+    "placeholders": {
+      "name": { "content": "$1", "example": "Bienvenida" }
+    }
+  },
+  "msgWriteMessageFirst": {
+    "message": "Escribe un mensaje primero",
+    "description": "Advertencia escribir mensaje primero"
+  },
+  "promptTemplateName": {
+    "message": "Nombre para la plantilla:",
+    "description": "Prompt nombre de plantilla"
+  },
+  "msgTemplateSaved": {
+    "message": "Plantilla \"$NAME$\" guardada",
+    "description": "Notificación plantilla guardada",
+    "placeholders": {
+      "name": { "content": "$1", "example": "Bienvenida" }
+    }
+  },
+  "msgSelectTemplateToDelete": {
+    "message": "Selecciona una plantilla para eliminar",
+    "description": "Advertencia seleccionar plantilla para eliminar"
+  },
+  "confirmDeleteTemplate": {
+    "message": "¿Eliminar la plantilla \"$NAME$\"?",
+    "description": "Confirmar eliminar plantilla",
+    "placeholders": {
+      "name": { "content": "$1", "example": "Bienvenida" }
+    }
+  },
+  "msgTemplateDeleted": {
+    "message": "Plantilla eliminada",
+    "description": "Notificación plantilla eliminada"
+  },
+
+  "msgFileAttached": {
+    "message": "Archivo \"$NAME$\" adjuntado",
+    "description": "Notificación archivo adjuntado",
+    "placeholders": {
+      "name": { "content": "$1", "example": "imagen.jpg" }
+    }
+  },
+  "msgStatsReset": {
+    "message": "Estadísticas reiniciadas",
+    "description": "Notificación estadísticas reiniciadas"
+  },
+
+  "msgWriteMessageOrAttach": {
+    "message": "Escribe un mensaje o adjunta un archivo",
+    "description": "Advertencia escribir mensaje o adjuntar"
+  },
+  "msgSendingTestMessage": {
+    "message": "Enviando mensaje de prueba...",
+    "description": "Notificación enviando mensaje de prueba"
+  },
+  "msgTestSentSuccess": {
+    "message": "¡Prueba enviada con éxito!",
+    "description": "Notificación prueba enviada con éxito"
+  },
+  "promptTestNumber": {
+    "message": "Ingresa tu número para pruebas (con código de país, ej: 521234567890):",
+    "description": "Prompt número de prueba"
+  },
+  "msgNoPendingContacts": {
+    "message": "No hay contactos pendientes para enviar",
+    "description": "Advertencia no hay contactos pendientes"
+  },
+  "confirmSendToContacts": {
+    "message": "¿Enviar mensaje a $COUNT$ contactos?",
+    "description": "Confirmar enviar a contactos",
+    "placeholders": {
+      "count": { "content": "$1", "example": "50" }
+    }
+  },
+  "msgStoppingSending": {
+    "message": "Deteniendo envío...",
+    "description": "Notificación deteniendo envío"
+  },
+  "msgSendingStopped": {
+    "message": "Envío detenido",
+    "description": "Notificación envío detenido"
+  },
+  "msgSendingComplete": {
+    "message": "Completado: $SENT$ enviados, $FAILED$ fallidos",
+    "description": "Notificación envío completado",
+    "placeholders": {
+      "sent": { "content": "$1", "example": "45" },
+      "failed": { "content": "$2", "example": "5" }
+    }
+  },
+  "msgWaitingSeconds": {
+    "message": "Esperando $SECONDS$s...",
+    "description": "Cuenta regresiva esperando",
+    "placeholders": {
+      "seconds": { "content": "$1", "example": "5" }
+    }
+  },
+
+  "apologyText": {
+    "message": "\n\nDisculpa por la molestia si este mensaje no es de tu interés.",
+    "description": "Texto de disculpa a insertar"
+  },
+
+  "errorInvalidNumber": {
+    "message": "Número inválido",
+    "description": "Error número inválido"
+  },
+  "errorChatTimeout": {
+    "message": "Timeout esperando el chat",
+    "description": "Error timeout del chat"
+  },
+  "errorNoAttachButton": {
+    "message": "No se encontró el botón de adjuntar",
+    "description": "Error no hay botón adjuntar"
+  },
+  "errorNoFileInput": {
+    "message": "No se encontró el input de archivo",
+    "description": "Error no hay input de archivo"
+  },
+  "errorNoSendButton": {
+    "message": "No se encontró el botón de enviar",
+    "description": "Error no hay botón enviar"
+  },
+  "errorNoMembersInstruction": {
+    "message": "No se encontraron números. Asegúrate de:\n1. Estar en la vista de info del grupo\n2. Que los participantes sean visibles\n3. Desplázate para cargar más participantes",
+    "description": "Instrucción no se encontraron miembros"
+  }
+}
+

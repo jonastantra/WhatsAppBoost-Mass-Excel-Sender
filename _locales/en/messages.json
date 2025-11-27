@@ -1,0 +1,758 @@
+{
+  "extName": {
+    "message": "WA Sender Pro",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Bulk message sending for WhatsApp Web with professional interface.",
+    "description": "Extension description"
+  },
+  "actionTitle": {
+    "message": "Open WA Sender Pro",
+    "description": "Action button title"
+  },
+
+  "appName": {
+    "message": "WA Sender Pro",
+    "description": "App name displayed in header"
+  },
+  "quickSendTitle": {
+    "message": "Quick send",
+    "description": "Quick send button title"
+  },
+
+  "loadingInitializing": {
+    "message": "Initializing...",
+    "description": "Loading screen initial message"
+  },
+  "loadingSearchingWhatsApp": {
+    "message": "Searching WhatsApp Web",
+    "description": "Loading step - searching"
+  },
+  "loadingConnecting": {
+    "message": "Connecting",
+    "description": "Loading step - connecting"
+  },
+  "loadingReady": {
+    "message": "Ready",
+    "description": "Loading step - ready"
+  },
+
+  "qrTitle": {
+    "message": "Scan the QR code",
+    "description": "QR screen title"
+  },
+  "qrMessage": {
+    "message": "Open WhatsApp on your phone and scan the QR code to continue.",
+    "description": "QR screen message"
+  },
+  "qrStep1": {
+    "message": "1. Open WhatsApp on your phone",
+    "description": "QR instruction step 1"
+  },
+  "qrStep2": {
+    "message": "2. Tap $MENU$ or $SETTINGS$",
+    "description": "QR instruction step 2",
+    "placeholders": {
+      "menu": { "content": "Menu" },
+      "settings": { "content": "Settings" }
+    }
+  },
+  "qrStep3": {
+    "message": "3. Select $LINKED_DEVICES$",
+    "description": "QR instruction step 3",
+    "placeholders": {
+      "linked_devices": { "content": "Linked devices" }
+    }
+  },
+  "qrStep4": {
+    "message": "4. Tap $LINK_DEVICE$",
+    "description": "QR instruction step 4",
+    "placeholders": {
+      "link_device": { "content": "Link a device" }
+    }
+  },
+  "btnVerifyConnection": {
+    "message": "Verify connection",
+    "description": "Button to verify connection"
+  },
+
+  "errorTitle": {
+    "message": "Connection Error",
+    "description": "Error screen title"
+  },
+  "errorDefaultMessage": {
+    "message": "Could not connect to WhatsApp Web",
+    "description": "Default error message"
+  },
+  "btnRetry": {
+    "message": "Retry",
+    "description": "Retry button"
+  },
+  "btnOpenWhatsAppWeb": {
+    "message": "Open WhatsApp Web",
+    "description": "Open WhatsApp Web button"
+  },
+
+  "statusConnected": {
+    "message": "Connected to WhatsApp Web",
+    "description": "Status bar connected message"
+  },
+
+  "tabManual": {
+    "message": "Manual",
+    "description": "Manual tab"
+  },
+  "tabExcel": {
+    "message": "Excel/CSV",
+    "description": "Excel/CSV tab"
+  },
+  "tabGroups": {
+    "message": "Groups",
+    "description": "Groups tab"
+  },
+  "tabSettings": {
+    "message": "Settings",
+    "description": "Settings tab"
+  },
+
+  "addNumbers": {
+    "message": "Add Numbers",
+    "description": "Add numbers card title"
+  },
+  "addTitle": {
+    "message": "Add",
+    "description": "Add button title"
+  },
+  "noContactsAdded": {
+    "message": "No contacts added",
+    "description": "Empty state message"
+  },
+  "clearList": {
+    "message": "Clear List",
+    "description": "Clear list button"
+  },
+  "totalLabel": {
+    "message": "Total:",
+    "description": "Total contacts label"
+  },
+
+  "howToUseTemplates": {
+    "message": "How to use templates?",
+    "description": "Template instructions title"
+  },
+  "templateStep1": {
+    "message": "Download the example template",
+    "description": "Template instruction 1"
+  },
+  "templateStep2": {
+    "message": "Fill in your contacts data",
+    "description": "Template instruction 2"
+  },
+  "templateStep3": {
+    "message": "Upload the file here",
+    "description": "Template instruction 3"
+  },
+  "downloadTemplate": {
+    "message": "📥 Download Template",
+    "description": "Download template card title"
+  },
+  "excelXlsx": {
+    "message": "Excel (.xlsx)",
+    "description": "Excel format label"
+  },
+  "recommended": {
+    "message": "Recommended",
+    "description": "Recommended label"
+  },
+  "csvLabel": {
+    "message": "CSV",
+    "description": "CSV format label"
+  },
+  "simple": {
+    "message": "Simple",
+    "description": "Simple label"
+  },
+  "availableColumns": {
+    "message": "Available columns:",
+    "description": "Available columns label"
+  },
+  "phoneColumnRequired": {
+    "message": "The $COLUMN$ column is required",
+    "description": "Phone column required hint",
+    "placeholders": {
+      "column": { "content": "phone" }
+    }
+  },
+  "uploadFile": {
+    "message": "📤 Upload File",
+    "description": "Upload file card title"
+  },
+  "dragFileHere": {
+    "message": "Drag your file here",
+    "description": "Drag and drop message"
+  },
+  "orDivider": {
+    "message": "— or —",
+    "description": "Or divider text"
+  },
+  "selectFile": {
+    "message": "Select File",
+    "description": "Select file button"
+  },
+  "uploadHint": {
+    "message": "Excel (.xlsx, .xls), CSV, TXT — Max 5MB",
+    "description": "Upload hint text"
+  },
+  "removeTitle": {
+    "message": "Remove",
+    "description": "Remove button title"
+  },
+  "preview": {
+    "message": "Preview",
+    "description": "Preview title"
+  },
+  "contactsCount": {
+    "message": "$COUNT$ contacts",
+    "description": "Contacts count",
+    "placeholders": {
+      "count": { "content": "$1", "example": "10" }
+    }
+  },
+  "btnCancel": {
+    "message": "Cancel",
+    "description": "Cancel button"
+  },
+  "btnImportContacts": {
+    "message": "Import Contacts",
+    "description": "Import contacts button"
+  },
+
+  "extractGroupMembers": {
+    "message": "Extract Group Members",
+    "description": "Groups card title"
+  },
+  "groupStep1": {
+    "message": "Open a $GROUP$ in WhatsApp Web",
+    "description": "Group instruction 1",
+    "placeholders": {
+      "group": { "content": "group" }
+    }
+  },
+  "groupStep2": {
+    "message": "Click on the $GROUP_NAME$ (top)",
+    "description": "Group instruction 2",
+    "placeholders": {
+      "group_name": { "content": "group name" }
+    }
+  },
+  "groupStep3": {
+    "message": "Scroll to see the $PARTICIPANTS_LIST$",
+    "description": "Group instruction 3",
+    "placeholders": {
+      "participants_list": { "content": "participants list" }
+    }
+  },
+  "groupStep4": {
+    "message": "Click the button below",
+    "description": "Group instruction 4"
+  },
+  "getGroupMembers": {
+    "message": "Get Group Members",
+    "description": "Get group members button"
+  },
+  "extractNumbersFromGroup": {
+    "message": "Extract numbers from the open group",
+    "description": "Get group members button description"
+  },
+  "searchingMembers": {
+    "message": "Searching members...",
+    "description": "Searching members status"
+  },
+  "membersFound": {
+    "message": "👥 Members Found",
+    "description": "Members found card title"
+  },
+  "btnAddToList": {
+    "message": "Add to List",
+    "description": "Add to list button"
+  },
+  "responsibleUse": {
+    "message": "Responsible Use:",
+    "description": "Disclaimer title"
+  },
+  "disclaimerText": {
+    "message": "This feature is for personal use. Do not use extracted numbers for spam. Respect WhatsApp policies.",
+    "description": "Disclaimer text"
+  },
+
+  "sendingConfig": {
+    "message": "Sending Configuration",
+    "description": "Sending config card title"
+  },
+  "sendingInterval": {
+    "message": "Sending interval",
+    "description": "Sending interval label"
+  },
+  "sendingIntervalDesc": {
+    "message": "Messages will be sent randomly in this range",
+    "description": "Sending interval description"
+  },
+  "secondsUnit": {
+    "message": "sec",
+    "description": "Seconds unit"
+  },
+  "antiBanLabel": {
+    "message": "Anti-Ban (unique ID)",
+    "description": "Anti-ban setting label"
+  },
+  "antiBanDesc": {
+    "message": "Adds a unique identifier to each message",
+    "description": "Anti-ban setting description"
+  },
+  "deleteChatLabel": {
+    "message": "Delete chat after sending",
+    "description": "Delete chat setting label"
+  },
+  "deleteChatDesc": {
+    "message": "Archives the chat automatically",
+    "description": "Delete chat setting description"
+  },
+  "timestampLabel": {
+    "message": "Add timestamp",
+    "description": "Timestamp setting label"
+  },
+  "timestampDesc": {
+    "message": "Adds the time at the end of the message",
+    "description": "Timestamp setting description"
+  },
+  "statistics": {
+    "message": "Statistics",
+    "description": "Statistics card title"
+  },
+  "sentLabel": {
+    "message": "Sent",
+    "description": "Sent stat label"
+  },
+  "failedLabel": {
+    "message": "Failed",
+    "description": "Failed stat label"
+  },
+  "pendingLabel": {
+    "message": "Pending",
+    "description": "Pending stat label"
+  },
+  "resetStats": {
+    "message": "Reset Statistics",
+    "description": "Reset statistics button"
+  },
+
+  "messageLabel": {
+    "message": "Message",
+    "description": "Message composer title"
+  },
+  "testMessage": {
+    "message": "Test message",
+    "description": "Test message button"
+  },
+  "selectTemplate": {
+    "message": "Select template...",
+    "description": "Template select placeholder"
+  },
+  "saveTemplateTitle": {
+    "message": "Save template",
+    "description": "Save template button title"
+  },
+  "deleteTemplateTitle": {
+    "message": "Delete template",
+    "description": "Delete template button title"
+  },
+  "variablesLabel": {
+    "message": "Variables:",
+    "description": "Variables label"
+  },
+  "varNumber": {
+    "message": "Number",
+    "description": "Number variable button"
+  },
+  "varName": {
+    "message": "Name",
+    "description": "Name variable button"
+  },
+  "varDate": {
+    "message": "Date",
+    "description": "Date variable button"
+  },
+  "boldTitle": {
+    "message": "Bold",
+    "description": "Bold format button title"
+  },
+  "italicTitle": {
+    "message": "Italic",
+    "description": "Italic format button title"
+  },
+  "strikeTitle": {
+    "message": "Strikethrough",
+    "description": "Strikethrough format button title"
+  },
+  "codeTitle": {
+    "message": "Code",
+    "description": "Code format button title"
+  },
+  "attachLabel": {
+    "message": "Attach",
+    "description": "Attach button label"
+  },
+  "messagePlaceholder": {
+    "message": "Write your message here...\n\nUse variables like {{numero}} to personalize each message.",
+    "description": "Message textarea placeholder"
+  },
+  "apologyButton": {
+    "message": "Sorry for the inconvenience",
+    "description": "Apology quick action button"
+  },
+  "addTimestampBtn": {
+    "message": "+ Timestamp",
+    "description": "Add timestamp quick action button"
+  },
+
+  "sendMessages": {
+    "message": "Send Messages",
+    "description": "Send messages button"
+  },
+  "stopSending": {
+    "message": "Stop Sending",
+    "description": "Stop sending button"
+  },
+  "viewStats": {
+    "message": "View statistics →",
+    "description": "View statistics link"
+  },
+
+  "msgSearchingWhatsApp": {
+    "message": "Searching WhatsApp Web...",
+    "description": "Searching WhatsApp message"
+  },
+  "msgCouldNotFindWhatsApp": {
+    "message": "Could not find WhatsApp Web",
+    "description": "Could not find WhatsApp error"
+  },
+  "msgConnectingWhatsApp": {
+    "message": "Connecting to WhatsApp Web...",
+    "description": "Connecting message"
+  },
+  "msgWaitingWhatsAppLoad": {
+    "message": "Waiting for WhatsApp Web to load...",
+    "description": "Waiting for load message"
+  },
+  "msgConnected": {
+    "message": "Connected!",
+    "description": "Connected message"
+  },
+  "msgLoadingWhatsApp": {
+    "message": "Loading WhatsApp Web... $PERCENT$%",
+    "description": "Loading with percentage",
+    "placeholders": {
+      "percent": { "content": "$1", "example": "50" }
+    }
+  },
+  "msgTimeoutExpired": {
+    "message": "Timeout expired",
+    "description": "Timeout error message"
+  },
+  "msgInvalidNumber": {
+    "message": "Please enter a valid number (minimum 10 digits)",
+    "description": "Invalid number error"
+  },
+  "msgNumberAlreadyInList": {
+    "message": "This number is already in the list",
+    "description": "Duplicate number warning"
+  },
+  "msgNumberAdded": {
+    "message": "Number $NUMBER$ added",
+    "description": "Number added notification",
+    "placeholders": {
+      "number": { "content": "$1", "example": "521234567890" }
+    }
+  },
+  "msgConfirmClearList": {
+    "message": "Are you sure you want to clear the entire list?",
+    "description": "Confirm clear list"
+  },
+  "msgListCleared": {
+    "message": "List cleared",
+    "description": "List cleared notification"
+  },
+
+  "statusPending": {
+    "message": "Pending",
+    "description": "Pending status"
+  },
+  "statusSendingProgress": {
+    "message": "Sending...",
+    "description": "Sending status"
+  },
+  "statusSent": {
+    "message": "✓ Sent",
+    "description": "Sent status"
+  },
+  "statusErrorLabel": {
+    "message": "✗ Error",
+    "description": "Error status"
+  },
+
+  "msgExcelLibNotLoaded": {
+    "message": "Error: Excel library not loaded",
+    "description": "Excel library error"
+  },
+  "msgExcelTemplateDownloaded": {
+    "message": "✓ Excel template downloaded",
+    "description": "Excel template downloaded"
+  },
+  "msgCsvTemplateDownloaded": {
+    "message": "✓ CSV template downloaded",
+    "description": "CSV template downloaded"
+  },
+  "msgFileTooLarge": {
+    "message": "Error: File is too large (max 5MB)",
+    "description": "File too large error"
+  },
+  "msgFormatNotSupported": {
+    "message": "Format not supported. Use Excel (.xlsx, .xls) or CSV",
+    "description": "Format not supported error"
+  },
+  "msgNoValidContacts": {
+    "message": "No valid contacts found in the file",
+    "description": "No valid contacts error"
+  },
+  "msgFileEmptyOrNoData": {
+    "message": "The file is empty or has no data",
+    "description": "Empty file error"
+  },
+  "msgExcelReadError": {
+    "message": "Error reading Excel file",
+    "description": "Excel read error"
+  },
+  "msgCsvReadError": {
+    "message": "Error reading CSV file",
+    "description": "CSV read error"
+  },
+  "msgFileLoadError": {
+    "message": "Error loading file",
+    "description": "File load error"
+  },
+  "msgNoPhoneColumn": {
+    "message": "Phone column not found (phone, number, telefono, whatsapp)",
+    "description": "No phone column error"
+  },
+  "validLabel": {
+    "message": "Valid",
+    "description": "Valid label"
+  },
+  "andMoreContacts": {
+    "message": "... and $COUNT$ more",
+    "description": "And more contacts",
+    "placeholders": {
+      "count": { "content": "$1", "example": "10" }
+    }
+  },
+  "msgInvalidNumbersOmitted": {
+    "message": "⚠️ $COUNT$ invalid numbers will be omitted",
+    "description": "Invalid numbers warning",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "msgContactsImported": {
+    "message": "✓ $COUNT$ contacts imported",
+    "description": "Contacts imported notification",
+    "placeholders": {
+      "count": { "content": "$1", "example": "10" }
+    }
+  },
+  "msgDuplicates": {
+    "message": "($COUNT$ duplicates)",
+    "description": "Duplicates count",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" }
+    }
+  },
+  "msgImportCancelled": {
+    "message": "Import cancelled",
+    "description": "Import cancelled notification"
+  },
+
+  "msgSearchingGroupMembers": {
+    "message": "Searching group members...",
+    "description": "Searching group members"
+  },
+  "msgAnalyzingParticipants": {
+    "message": "Analyzing participants...",
+    "description": "Analyzing participants"
+  },
+  "msgMembersFound": {
+    "message": "$COUNT$ members found!",
+    "description": "Members found notification",
+    "placeholders": {
+      "count": { "content": "$1", "example": "25" }
+    }
+  },
+  "msgErrorExtractingMembers": {
+    "message": "Error extracting members",
+    "description": "Error extracting members"
+  },
+  "msgErrorGettingMembers": {
+    "message": "Error getting members",
+    "description": "Error getting members"
+  },
+  "msgNoPhoneNumbersFound": {
+    "message": "No phone numbers found.\n\nMake sure to:\n• Be in the group info\n• Participants are visible\n• Scroll to see more",
+    "description": "No phone numbers found error"
+  },
+  "msgMembersAddedToList": {
+    "message": "✓ $COUNT$ members added to list",
+    "description": "Members added notification",
+    "placeholders": {
+      "count": { "content": "$1", "example": "20" }
+    }
+  },
+  "andMoreMembers": {
+    "message": "... and $COUNT$ more members",
+    "description": "And more members",
+    "placeholders": {
+      "count": { "content": "$1", "example": "15" }
+    }
+  },
+
+  "msgTemplateApplied": {
+    "message": "Template \"$NAME$\" applied",
+    "description": "Template applied notification",
+    "placeholders": {
+      "name": { "content": "$1", "example": "Welcome" }
+    }
+  },
+  "msgWriteMessageFirst": {
+    "message": "Write a message first",
+    "description": "Write message first warning"
+  },
+  "promptTemplateName": {
+    "message": "Name for the template:",
+    "description": "Template name prompt"
+  },
+  "msgTemplateSaved": {
+    "message": "Template \"$NAME$\" saved",
+    "description": "Template saved notification",
+    "placeholders": {
+      "name": { "content": "$1", "example": "Welcome" }
+    }
+  },
+  "msgSelectTemplateToDelete": {
+    "message": "Select a template to delete",
+    "description": "Select template to delete warning"
+  },
+  "confirmDeleteTemplate": {
+    "message": "Delete template \"$NAME$\"?",
+    "description": "Confirm delete template",
+    "placeholders": {
+      "name": { "content": "$1", "example": "Welcome" }
+    }
+  },
+  "msgTemplateDeleted": {
+    "message": "Template deleted",
+    "description": "Template deleted notification"
+  },
+
+  "msgFileAttached": {
+    "message": "File \"$NAME$\" attached",
+    "description": "File attached notification",
+    "placeholders": {
+      "name": { "content": "$1", "example": "image.jpg" }
+    }
+  },
+  "msgStatsReset": {
+    "message": "Statistics reset",
+    "description": "Statistics reset notification"
+  },
+
+  "msgWriteMessageOrAttach": {
+    "message": "Write a message or attach a file",
+    "description": "Write message or attach warning"
+  },
+  "msgSendingTestMessage": {
+    "message": "Sending test message...",
+    "description": "Sending test message notification"
+  },
+  "msgTestSentSuccess": {
+    "message": "Test sent successfully!",
+    "description": "Test sent success notification"
+  },
+  "promptTestNumber": {
+    "message": "Enter your test number (with country code, e.g.: 521234567890):",
+    "description": "Test number prompt"
+  },
+  "msgNoPendingContacts": {
+    "message": "No pending contacts to send",
+    "description": "No pending contacts warning"
+  },
+  "confirmSendToContacts": {
+    "message": "Send message to $COUNT$ contacts?",
+    "description": "Confirm send to contacts",
+    "placeholders": {
+      "count": { "content": "$1", "example": "50" }
+    }
+  },
+  "msgStoppingSending": {
+    "message": "Stopping sending...",
+    "description": "Stopping sending notification"
+  },
+  "msgSendingStopped": {
+    "message": "Sending stopped",
+    "description": "Sending stopped notification"
+  },
+  "msgSendingComplete": {
+    "message": "Complete: $SENT$ sent, $FAILED$ failed",
+    "description": "Sending complete notification",
+    "placeholders": {
+      "sent": { "content": "$1", "example": "45" },
+      "failed": { "content": "$2", "example": "5" }
+    }
+  },
+  "msgWaitingSeconds": {
+    "message": "Waiting $SECONDS$s...",
+    "description": "Waiting countdown",
+    "placeholders": {
+      "seconds": { "content": "$1", "example": "5" }
+    }
+  },
+
+  "apologyText": {
+    "message": "\n\nSorry for the inconvenience if this message is not of your interest.",
+    "description": "Apology text to insert"
+  },
+
+  "errorInvalidNumber": {
+    "message": "Invalid number",
+    "description": "Invalid number error"
+  },
+  "errorChatTimeout": {
+    "message": "Timeout waiting for chat",
+    "description": "Chat timeout error"
+  },
+  "errorNoAttachButton": {
+    "message": "Attach button not found",
+    "description": "No attach button error"
+  },
+  "errorNoFileInput": {
+    "message": "File input not found",
+    "description": "No file input error"
+  },
+  "errorNoSendButton": {
+    "message": "Send button not found",
+    "description": "No send button error"
+  },
+  "errorNoMembersInstruction": {
+    "message": "No numbers found. Make sure to:\n1. Be in the group info view\n2. Participants are visible\n3. Scroll to load more participants",
+    "description": "No members found instruction"
+  }
+}
+

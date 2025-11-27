@@ -2,6 +2,40 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo.
 
+## [2.2.0] - 2024-11-27
+
+### 🌐 Internacionalización (i18n) - Soporte Multiidioma
+
+#### Nuevas Características
+- **Soporte para múltiples idiomas**: La extensión ahora puede mostrar textos en diferentes idiomas
+- **Idiomas disponibles**: Inglés (default) y Español
+- **Detección automática**: El idioma se selecciona automáticamente según el navegador
+- **Sistema i18n de Chrome**: Usa el sistema nativo de internacionalización de Chrome
+
+#### Archivos de Idiomas
+- `_locales/en/messages.json` - Inglés (idioma por defecto)
+- `_locales/es/messages.json` - Español
+
+#### Textos Traducidos
+- Todos los textos de la interfaz de usuario (botones, etiquetas, títulos)
+- Mensajes de notificación y alertas
+- Mensajes de error y confirmación
+- Placeholders y tooltips
+- Instrucciones y descripciones
+
+#### Cambios Técnicos
+- Añadido `"default_locale": "en"` en manifest.json
+- Función helper `i18n()` para obtener mensajes traducidos
+- Función `applyI18n()` para aplicar traducciones al cargar la página
+- Atributos `data-i18n`, `data-i18n-title`, `data-i18n-placeholder` en HTML
+
+#### Notas para Desarrolladores
+- Para añadir un nuevo idioma, crear carpeta en `_locales/[código ISO]/`
+- Copiar `messages.json` de `en/` y traducir los valores `"message"`
+- Los placeholders usan formato `$NOMBRE$` para variables
+
+---
+
 ## [2.1.2] - 2024-11-27
 
 ### 👥 Tab Grupos - Simplificado y Mejorado

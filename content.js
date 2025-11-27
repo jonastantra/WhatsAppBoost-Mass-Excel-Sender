@@ -1,7 +1,13 @@
 // ============================================
-// WA Sender Pro v2.0 - Content Script
+// WA Sender Pro v2.2 - Content Script
 // Handles WhatsApp Web DOM interactions
+// With i18n support
 // ============================================
+
+// --- i18n Helper ---
+function i18n(key) {
+  return chrome.i18n.getMessage(key) || key;
+}
 
 // --- Message Listener ---
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -119,14 +125,14 @@ function waitForChatLoad(timeout = 20000) {
                       document.querySelector('div[role="button"]:has(span)');
         if (okBtn) okBtn.click();
         
-        reject(new Error('Número inválido'));
+        reject(new Error(i18n('errorInvalidNumber')));
         return;
       }
 
       // Timeout
       if (Date.now() - startTime > timeout) {
         clearInterval(checkInterval);
-        reject(new Error('Timeout esperando el chat'));
+        reject(new Error(i18n('errorChatTimeout')));
       }
     }, 300);
   });
@@ -141,7 +147,7 @@ async function handleAttachment(attachment) {
                       document.querySelector('span[data-icon="attach-menu-plus"]');
     
     if (!attachBtn) {
-      throw new Error('No se encontró el botón de adjuntar');
+      throw new Error(i18n('errorNoAttachButton'));
     }
 
     const attachBtnParent = attachBtn.closest('div[role="button"]') || 
@@ -171,7 +177,7 @@ async function handleAttachment(attachment) {
     }
 
     if (!targetInput) {
-      throw new Error('No se encontró el input de archivo');
+      throw new Error(i18n('errorNoFileInput'));
     }
 
     // Note: Direct file injection doesn't work due to security restrictions
@@ -216,7 +222,7 @@ async function clickSendButton() {
     return true;
   }
 
-  throw new Error('No se encontró el botón de enviar');
+  throw new Error(i18n('errorNoSendButton'));
 }
 
 // --- Scrape Group Members (Enhanced) ---
@@ -299,7 +305,7 @@ async function handleScrapeGroup() {
 
     if (members.length === 0) {
       return { 
-        error: 'No se encontraron números. Asegúrate de:\n1. Estar en la vista de info del grupo\n2. Que los participantes sean visibles\n3. Desplázate para cargar más participantes',
+        error: i18n('errorNoMembersInstruction'),
         members: [] 
       };
     }
